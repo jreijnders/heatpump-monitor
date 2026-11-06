@@ -32,10 +32,12 @@ CREATE OR REPLACE FUNCTION gas_kwh_per_m3() RETURNS float8
 LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$ SELECT 9.769::float8 $$;
 
 -- gas_boiler_efficiency(): heat delivered per unit of gas energy (gross calorific value) of the
--- gas boiler the Heat Pump is compared with. 0.90 = condensing (HR) boiler on radiators.
--- TUNE HERE: ~0.95 for low-temperature floor heating, ~0.85 for an older or oversized boiler.
+-- gas boiler the Heat Pump is compared with. 0.963 = HR107 label value (107 % on the lower
+-- calorific value / 1.111 upper-to-lower ratio). Higher efficiency -> cheaper gas heat -> higher
+-- Break-even COP. TUNE HERE: ~0.90 for a condensing boiler on radiators (return >= 40 C),
+-- ~0.85 for an older or oversized boiler.
 CREATE OR REPLACE FUNCTION gas_boiler_efficiency() RETURNS float8
-LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$ SELECT 0.90::float8 $$;
+LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$ SELECT 0.963::float8 $$;
 
 -- breakeven_cop: per electricity price interval, the Break-even COP: the COP at which heat from
 -- the Heat Pump costs the same as heat from the gas boiler.

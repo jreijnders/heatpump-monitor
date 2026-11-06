@@ -1,6 +1,6 @@
 # easyEnergy prices for cost and Break-even COP
 
-Electricity and gas prices of the household's easyEnergy dynamic contract are fetched from easyEnergy's public price-graph API (`https://price-graph.mijn.easyenergy.com/api/prices`) by a small `prices` service (same Go module and image as the ingester, `cmd/prices`) into the `energy_prices` table. Electricity at quarter-hour, gas per day. The `invoicePrice` field (market price incl. VAT + energy tax + easyEnergy purchase fee) is the per-unit price used everywhere. Break-even COP and the "same heat from gas" cost compare against a gas boiler with 90 % efficiency on the gross calorific value (9.769 kWh/m3), both set in SQL functions (`gas_boiler_efficiency()`, `gas_kwh_per_m3()`).
+Electricity and gas prices of the household's easyEnergy dynamic contract are fetched from easyEnergy's public price-graph API (`https://price-graph.mijn.easyenergy.com/api/prices`) by a small `prices` service (same Go module and image as the ingester, `cmd/prices`) into the `energy_prices` table. Electricity at quarter-hour, gas per day. The `invoicePrice` field (market price incl. VAT + energy tax + easyEnergy purchase fee) is the per-unit price used everywhere. Break-even COP and the "same heat from gas" cost compare against a gas boiler with 96.3 % efficiency on the gross calorific value (9.769 kWh/m3): the HR107 label value (107 % on the lower calorific value / 1.111), both set in SQL functions (`gas_boiler_efficiency()`, `gas_kwh_per_m3()`).
 
 ## Considered options
 
@@ -17,6 +17,6 @@ Electricity and gas prices of the household's easyEnergy dynamic contract are fe
 
 ## Consequences
 
-- Cost results depend on the assumed boiler efficiency; 0.85-0.95 moves the Break-even COP by about ±6 %.
+- Cost results depend on the assumed boiler efficiency; the Break-even COP is proportional to it (0.90 instead of 0.963 lowers it by ~7 %). The HR107 label value is measured with a ~30 C return; on radiators the real efficiency is likely lower, which makes the comparison conservative for the Heat Pump.
 - Energy tax applies per tier; the API reports the first-tier rate, correct for a household (electricity < 10 000 kWh/yr).
 - An easyEnergy API change stops price updates; the dashboard then shows gaps, not wrong values. The ingester is unaffected.

@@ -1279,7 +1279,7 @@
         "colorMode": "value",
         "textMode": "value_and_name"
       },
-      "description": "COP = heat / electricity. Break-even COP = average all-in electricity price actually paid (weighted by consumption, per quarter hour) / price of the same heat from gas (all-in gas price / (9.769 kWh/m3 x 0.90 boiler efficiency)). COP above Break-even COP: the Heat Pump is cheaper than gas. Only minutes with prices and both meters (energy_cost_1m)."
+      "description": "COP = heat / electricity. Break-even COP = average all-in electricity price actually paid (weighted by consumption, per quarter hour) / price of the same heat from gas (all-in gas price / (9.769 kWh/m3 x 0.963 boiler efficiency, HR107)). COP above Break-even COP: the Heat Pump is cheaper than gas. Only minutes with prices and both meters (energy_cost_1m)."
     },
     {
       "id": 46,
@@ -1381,7 +1381,7 @@
         "colorMode": "value",
         "textMode": "value_and_name"
       },
-      "description": "What the delivered heat would have cost from a gas boiler (90 % efficiency on gross calorific value) at the easyEnergy all-in gas price of that day. Fixed monthly charges excluded."
+      "description": "What the delivered heat would have cost from a gas boiler (96.3 % efficiency on gross calorific value = HR107 label) at the easyEnergy all-in gas price of that day. Fixed monthly charges excluded."
     },
     {
       "id": 48,
@@ -1746,7 +1746,7 @@
           "sort": "none"
         }
       },
-      "description": "All-in per-unit prices incl. VAT, energy tax and easyEnergy purchase fee (energy_prices.invoice_price). Heat from gas = gas price / (9.769 kWh/m3 x 0.90). Break-even COP = electricity / heat from gas."
+      "description": "All-in per-unit prices incl. VAT, energy tax and easyEnergy purchase fee (energy_prices.invoice_price). Heat from gas = gas price / (9.769 kWh/m3 x 0.963). Break-even COP = electricity / heat from gas."
     },
     {
       "id": 15,

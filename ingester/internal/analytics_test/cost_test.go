@@ -11,7 +11,7 @@ import (
 // Must match db/schema/060_energy_prices.sql.
 const (
 	gasKWhPerM3        = 9.769
-	gasBoilerEfficency = 0.90
+	gasBoilerEfficency = 0.963
 )
 
 func insertPrice(t *testing.T, b *pgx.Batch, commodity string, starts, ends time.Time, invoice float64) {
