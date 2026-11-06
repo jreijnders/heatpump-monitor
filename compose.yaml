@@ -54,6 +54,19 @@ services:
       DATABASE_URL: postgres://ingester:${INGESTER_PASSWORD:?set in .env}@timescaledb:5432/heatpump
       LOG_LEVEL: ${LOG_LEVEL:-info}
 
+  # easyEnergy electricity + gas prices into energy_prices (ADR-0004). Same image as the ingester.
+  prices:
+    build: ./ingester
+    entrypoint: ["/prices"]
+    restart: unless-stopped
+    depends_on:
+      db-migrate:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: postgres://ingester:${INGESTER_PASSWORD:?set in .env}@timescaledb:5432/heatpump
+      PRICES_BACKFILL_DAYS: ${PRICES_BACKFILL_DAYS:-60}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+
   grafana:
     image: grafana/grafana:12.3.0
     restart: unless-stopped

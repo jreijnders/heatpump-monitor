@@ -3,8 +3,8 @@ WORKDIR /src
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/ingester ./cmd/ingester
+RUN CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/ ./cmd/ingester ./cmd/prices
 
 FROM gcr.io/distroless/static-debian12:nonroot
-COPY --from=build /out/ingester /ingester
+COPY --from=build /out/ingester /out/prices /
 ENTRYPOINT ["/ingester"]

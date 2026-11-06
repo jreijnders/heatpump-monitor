@@ -33,6 +33,10 @@ Start with `SELECT * FROM data_freshness` to see which devices report and how re
 | `heat_intervals_1m` | `bucket, flow_dt_kwh, counter_kwh, seconds` | Internal building block of the two views above; rarely needed. |
 | `cop_hourly` | `bucket, operating_mode, heat_kwh, elec_kwh, cop, minutes` | Only minutes where BOTH deltas exist. Has a `Combined` row per bucket. `cop` NULL if elec = 0. |
 | `cop_daily` | same | Days are Europe/Amsterdam. |
+| `energy_prices` | `commodity, starts, ends, unit, market_price_ex_vat, market_price_inc_vat, energy_tax, purchase_fee, invoice_price, fetched_at` | easyEnergy dynamic prices (ADR-0004). `electricity` per quarter hour (EUR/kWh), `gas` per local day (EUR/m3). `invoice_price` = all-in (market incl. VAT + energy tax + easyEnergy purchase fee). Includes tomorrow after ~13:00. |
+| `breakeven_cop` | `starts, ends, elec_price_eur_kwh, gas_price_eur_m3, gas_heat_price_eur_kwh, breakeven_cop` | Per electricity quarter hour: Break-even COP = elec price / (gas price / (`gas_kwh_per_m3()` 9.769 x `gas_boiler_efficiency()` 0.90)). |
+| `energy_cost_1m` | `bucket, operating_mode, heat_kwh, elec_kwh, elec_price_eur_kwh, gas_heat_price_eur_kwh, breakeven_cop, elec_cost_eur, gas_cost_eur` | `energy_1m` minutes with both deltas and a price. `gas_cost_eur` = what the same heat would cost from gas. |
+| `energy_cost_daily` | `bucket, operating_mode, heat_kwh, elec_kwh, cop, breakeven_cop, elec_cost_eur, gas_cost_eur, savings_eur, minutes` | Like `cop_daily`. `breakeven_cop` consumption-weighted: (Σelec_cost/Σelec) / (Σgas_cost/Σheat); `cop > breakeven_cop` <=> `savings_eur > 0`. |
 | `compressor_cycles(p_from, p_to)` | `cycle_start, cycle_end, duration` | From raw `compressor_on`. Open cycle: `cycle_end`/`duration` NULL. Returns cycles overlapping `[p_from, p_to)`; a cycle already running at `p_from` keeps its real start (24 h look-back). Keep ranges bounded (days to weeks). |
 | `power_1m` | `bucket, device, power_w` | Per-minute avg power (W). Used by Grafana. |
 | `heating_curve_1h` | `bucket, flow_temp, target_flow_temp, outdoor_temp, room_temp, curve_shift, minutes` | Space Heating minutes only. |
@@ -116,4 +120,5 @@ FROM cop_hourly WHERE bucket >= now() - interval '1 day' ORDER BY bucket, operat
 - `heat_pump_1m.flow_rate` is L/h (like the Heat Meter's flow rate).
 - Heat Meter polls every 60 s; a power step is split over two neighbouring minutes (trapezoid), so per-minute mode attribution is slightly smeared around mode changes.
 - Mode and COP views scan all energy counters (window functions); fine now, avoid calling them in tight loops.
+- Cost views exclude fixed charges (standing charges, network costs, energy tax credit): marginal comparison only. The gas boiler efficiency (0.90) is an assumption; tune `gas_boiler_efficiency()` in `db/schema/060_energy_prices.sql`.
 - Read-only: never suggest writing; if schema changes are needed, propose a new `db/schema/NNN_*.sql` file instead.

@@ -1187,6 +1187,568 @@
       "description": "Per Europe/Amsterdam day: Heat Meter energy counter divided by the energy from flow rate x Delta T. Valid points are applied to heat_kwh (complete day, >= 5 kWh, factor 0.8 to 1.25); invalid days fall back to the latest valid factor of the previous 7 days, else 1.0. Drift away from 1.0 means a sensor or meter issue. See ADR-0003."
     },
     {
+      "id": 44,
+      "type": "row",
+      "title": "Cost vs gas (easyEnergy)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 53
+      },
+      "panels": []
+    },
+    {
+      "id": 45,
+      "type": "stat",
+      "title": "COP vs Break-even COP (selected range)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 54
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(heat_kwh) / NULLIF(sum(elec_kwh), 0) AS \"COP\", (sum(elec_cost_eur) / NULLIF(sum(elec_kwh), 0)) / NULLIF(sum(gas_cost_eur) / NULLIF(sum(heat_kwh), 0), 0) AS \"Break-even COP\" FROM energy_cost_1m WHERE $__timeFilter(bucket)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "unit": "none",
+          "decimals": 2
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "COP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Break-even COP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "textMode": "value_and_name"
+      },
+      "description": "COP = heat / electricity. Break-even COP = average all-in electricity price actually paid (weighted by consumption, per quarter hour) / price of the same heat from gas (all-in gas price / (9.769 kWh/m3 x 0.90 boiler efficiency)). COP above Break-even COP: the Heat Pump is cheaper than gas. Only minutes with prices and both meters (energy_cost_1m)."
+    },
+    {
+      "id": 46,
+      "type": "stat",
+      "title": "Heat Pump electricity cost (selected range)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 54
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(elec_cost_eur) AS \"Electricity\" FROM energy_cost_1m WHERE $__timeFilter(bucket)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "unit": "currencyEUR",
+          "decimals": 2
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "textMode": "value_and_name"
+      },
+      "description": "Sum of electricity kWh x easyEnergy all-in price of that quarter hour (market + VAT + energy tax + purchase fee). Fixed monthly charges excluded."
+    },
+    {
+      "id": 47,
+      "type": "stat",
+      "title": "Same heat from gas (selected range)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 54
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(gas_cost_eur) AS \"Gas\" FROM energy_cost_1m WHERE $__timeFilter(bucket)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "unit": "currencyEUR",
+          "decimals": 2
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "textMode": "value_and_name"
+      },
+      "description": "What the delivered heat would have cost from a gas boiler (90 % efficiency on gross calorific value) at the easyEnergy all-in gas price of that day. Fixed monthly charges excluded."
+    },
+    {
+      "id": 48,
+      "type": "stat",
+      "title": "Savings vs gas (selected range)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 54
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(gas_cost_eur) - sum(elec_cost_eur) AS \"Savings\" FROM energy_cost_1m WHERE $__timeFilter(bucket)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds",
+            "fixedColor": "text"
+          },
+          "unit": "currencyEUR",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "textMode": "value_and_name"
+      },
+      "description": "Same heat from gas minus Heat Pump electricity cost. Negative: gas would have been cheaper."
+    },
+    {
+      "id": 49,
+      "type": "timeseries",
+      "title": "COP vs Break-even COP per hour",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 58
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('1 hour', bucket) AS time, sum(heat_kwh) / NULLIF(sum(elec_kwh), 0) AS \"COP\", (sum(elec_cost_eur) / NULLIF(sum(elec_kwh), 0)) / NULLIF(sum(gas_cost_eur) / NULLIF(sum(heat_kwh), 0), 0) AS \"Break-even COP (weighted)\" FROM energy_cost_1m WHERE $__timeFilter(bucket) GROUP BY 1 ORDER BY 1"
+        },
+        {
+          "refId": "B",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT starts AS time, breakeven_cop AS \"Break-even COP (price, per quarter)\" FROM breakeven_cop WHERE $__timeFilter(starts) ORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "none",
+          "decimals": 2,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "spanNulls": false,
+            "showPoints": "never"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "COP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Break-even COP (weighted)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Break-even COP (price, per quarter)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              },
+              {
+                "id": "custom.lineInterpolation",
+                "value": "stepAfter"
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    6,
+                    4
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "description": "COP per hour vs the Break-even COP weighted by that hour's consumption. The dashed line is the price-only Break-even COP per quarter hour (also when the Heat Pump is idle, and tomorrow's once published ~13:00): running when it is low is cheapest."
+    },
+    {
+      "id": 50,
+      "type": "barchart",
+      "title": "COP vs Break-even COP per day",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 58
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT to_char(bucket AT TIME ZONE 'Europe/Amsterdam','YYYY-MM-DD') AS day, cop AS \"COP\", breakeven_cop AS \"Break-even COP\", savings_eur AS \"Savings vs gas\" FROM energy_cost_daily WHERE $__timeFilter(bucket) AND operating_mode = 'Combined' ORDER BY bucket"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 2
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "COP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Break-even COP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Savings vs gas"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyEUR"
+              },
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "xField": "day",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "showValue": "auto",
+        "groupWidth": 0.8,
+        "barWidth": 0.9,
+        "xTickLabelRotation": -45
+      },
+      "description": "Per local day (energy_cost_daily, Combined): COP vs consumption-weighted Break-even COP. Savings vs gas in the tooltip."
+    },
+    {
+      "id": 51,
+      "type": "timeseries",
+      "title": "easyEnergy all-in prices: electricity vs heat from gas",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 67
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT starts AS time, elec_price_eur_kwh AS \"Electricity (EUR/kWh)\", gas_heat_price_eur_kwh AS \"Heat from gas (EUR/kWh heat)\", gas_price_eur_m3 AS \"Gas (EUR/m3)\" FROM breakeven_cop WHERE $__timeFilter(starts) ORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "currencyEUR",
+          "decimals": 4,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "lineInterpolation": "stepAfter",
+            "showPoints": "never"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Gas (EUR/m3)"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": false,
+                  "tooltip": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "description": "All-in per-unit prices incl. VAT, energy tax and easyEnergy purchase fee (energy_prices.invoice_price). Heat from gas = gas price / (9.769 kWh/m3 x 0.90). Break-even COP = electricity / heat from gas."
+    },
+    {
       "id": 15,
       "type": "row",
       "title": "Cycling",
@@ -1195,7 +1757,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 75
       },
       "panels": []
     },
@@ -1211,7 +1773,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 54
+        "y": 76
       },
       "targets": [
         {
@@ -1276,7 +1838,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 54
+        "y": 76
       },
       "targets": [
         {
@@ -1322,7 +1884,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 54
+        "y": 76
       },
       "targets": [
         {
@@ -1366,7 +1928,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 54
+        "y": 76
       },
       "targets": [
         {
@@ -1409,7 +1971,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 60
+        "y": 82
       },
       "targets": [
         {
@@ -1481,7 +2043,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 60
+        "y": 82
       },
       "targets": [
         {
@@ -1525,7 +2087,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 69
+        "y": 91
       },
       "targets": [
         {
@@ -1579,7 +2141,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 69
+        "y": 91
       },
       "targets": [
         {
@@ -1632,7 +2194,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 69
+        "y": 91
       },
       "targets": [
         {
@@ -1683,7 +2245,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 78
+        "y": 100
       },
       "panels": []
     },
@@ -1699,7 +2261,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 79
+        "y": 101
       },
       "targets": [
         {
@@ -1764,7 +2326,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 79
+        "y": 101
       },
       "targets": [
         {
@@ -1816,7 +2378,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 79
+        "y": 101
       },
       "targets": [
         {
@@ -1865,7 +2427,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 88
+        "y": 110
       },
       "panels": []
     },
@@ -1881,7 +2443,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 89
+        "y": 111
       },
       "targets": [
         {
@@ -1933,7 +2495,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 89
+        "y": 111
       },
       "targets": [
         {
@@ -1985,7 +2547,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 89
+        "y": 111
       },
       "targets": [
         {
@@ -2037,7 +2599,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 97
+        "y": 119
       },
       "targets": [
         {
@@ -2089,7 +2651,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 97
+        "y": 119
       },
       "targets": [
         {
@@ -2141,7 +2703,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 97
+        "y": 119
       },
       "targets": [
         {
@@ -2190,7 +2752,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 105
+        "y": 127
       },
       "panels": []
     },
@@ -2206,7 +2768,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 106
+        "y": 128
       },
       "targets": [
         {

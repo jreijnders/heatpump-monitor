@@ -112,6 +112,10 @@ _Avoid_: shift value
 Coefficient of performance: thermal energy delivered (from the Heat Meter, per-minute from Flow Rate x Delta T calibrated to its counter) divided by electrical energy consumed (from the Electricity Meter) over a given period, reported per Operating Mode and combined.
 _Avoid_: efficiency
 
+**Break-even COP**:
+The COP at which heat from the Heat Pump costs the same as heat from a gas boiler: all-in electricity price per kWh divided by the gas price per kWh of heat (gas price per m3 / (9.769 kWh/m3 x boiler efficiency)). Above it the Heat Pump is cheaper. Per quarter hour from prices alone, or weighted by actual consumption over a period.
+_Avoid_: break-even point, terugverdien-COP
+
 **Calibration Factor**:
 Per day, Heat Meter energy counter divided by the energy from Flow Rate x Delta T. Scales the per-minute heat so it agrees with the counter; 1.0 when no valid factor exists.
 _Avoid_: correction, fudge factor
