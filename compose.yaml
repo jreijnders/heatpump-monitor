@@ -1,0 +1,95 @@
+name: heatpump-monitor
+
+x-timescale-image: &timescale-image timescale/timescaledb:2.28.2-pg17
+
+services:
+  timescaledb:
+    image: *timescale-image
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: heatpump
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+    ports:
+      # Localhost only: reached from other machines via SSH tunnel (scripts/tunnel.sh).
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d heatpump"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  db-migrate:
+    image: *timescale-image
+    restart: "no"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    environment:
+      PGHOST: timescaledb
+      PGUSER: postgres
+      PGDATABASE: heatpump
+      PGPASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      INGESTER_PASSWORD: ${INGESTER_PASSWORD:?set in .env}
+      GRAFANA_RO_PASSWORD: ${GRAFANA_RO_PASSWORD:?set in .env}
+      CLAUDE_RO_PASSWORD: ${CLAUDE_RO_PASSWORD:?set in .env}
+    volumes:
+      - ./db/schema:/schema:ro
+      - ./db/migrate.sh:/migrate.sh:ro
+    entrypoint: ["/bin/sh", "/migrate.sh"]
+
+  ingester:
+    build: ./ingester
+    restart: unless-stopped
+    depends_on:
+      db-migrate:
+        condition: service_completed_successfully
+    environment:
+      MQTT_URL: ${MQTT_URL:?set in .env}
+      MQTT_CLIENT_ID: ${MQTT_CLIENT_ID:-heatpump-monitor-ingester}
+      MQTT_USERNAME: ${MQTT_USERNAME:-}
+      MQTT_PASSWORD: ${MQTT_PASSWORD:-}
+      DATABASE_URL: postgres://ingester:${INGESTER_PASSWORD:?set in .env}@timescaledb:5432/heatpump
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+
+  grafana:
+    image: grafana/grafana:12.3.0
+    restart: unless-stopped
+    depends_on:
+      db-migrate:
+        condition: service_completed_successfully
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set in .env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GRAFANA_RO_PASSWORD: ${GRAFANA_RO_PASSWORD:?set in .env}
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+
+  db-backup:
+    image: *timescale-image
+    restart: unless-stopped
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    environment:
+      PGHOST: timescaledb
+      PGUSER: postgres
+      PGDATABASE: heatpump
+      PGPASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      BACKUP_DIR: /backups
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
+    volumes:
+      - ./backups:/backups
+      - ./scripts/backup.sh:/backup.sh:ro
+    entrypoint: ["/bin/sh", "/backup.sh"]
+
+volumes:
+  pgdata:
+  grafana-data:

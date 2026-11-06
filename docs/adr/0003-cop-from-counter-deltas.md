@@ -1,0 +1,3 @@
+# COP from energy counter deltas, not instantaneous power
+
+COP is computed as Δ(Heat Meter cumulative kWh) / Δ(Electricity Meter cumulative kWh) per interval, not by integrating instantaneous power. Counters stay exact across missed polls and Gateway restarts, while power integration drifts. This works for per-Operating-Mode COP only because the Heat Meter (Kamstrup Multical over M-Bus) reports energy at Wh resolution; at 1 kWh resolution a single DHW run would be too coarse. The Heat Meter is battery-powered, so it's polled every 60s instead of 10s, and its counter deltas are attributed to Operating Modes using the Heat Pump's 10s mode samples.

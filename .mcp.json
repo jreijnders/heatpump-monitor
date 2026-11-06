@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "heatpump-db": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "DATABASE_URI",
+        "crystaldba/postgres-mcp",
+        "--access-mode=restricted"
+      ],
+      "env": {
+        "DATABASE_URI": "postgresql://claude_ro:${CLAUDE_RO_PASSWORD}@${HEATPUMP_DB_HOST:-host.docker.internal}:${HEATPUMP_DB_PORT:-15432}/heatpump"
+      }
+    }
+  }
+}

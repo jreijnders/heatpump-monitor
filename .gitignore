@@ -1,0 +1,4 @@
+.env
+ingester/bin/
+backups/
+.DS_Store
