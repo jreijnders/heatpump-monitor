@@ -14,7 +14,8 @@
 -- compressor_hz, discharge_temp, suction_temp, liquid_temp, evaporator_in_temp,
 -- evaporator_out_temp, high_pressure, low_pressure, dhw_target_temp, mode_setting, control_method,
 -- energy_state, silent_mode, backup_heater_1_on, backup_heater_2_on, dhw_heater_on,
--- dhw_disinfection_active, error_active.
+-- dhw_disinfection_active, error_active, delta_t (Delta T across the Heat Pump = flow_temp -
+-- return_temp; ~5 K is the target in Space Heating).
 -- flow_rate (Heat Pump) is in L/h, like the Heat Meter flow rate.
 -- ASSUMPTION: the Electricity Meter measures the whole Heat Pump including its electric heaters,
 -- so elec_kwh includes resistive heating while dhw_heater_on / backup_heater_*_on are > 0.
@@ -34,7 +35,8 @@ SELECT
     p.evaporator_in_temp, p.evaporator_out_temp, p.high_pressure, p.low_pressure,
     p.dhw_target_temp, p.mode_setting, p.control_method, p.energy_state, p.silent_mode,
     p.backup_heater_1_on, p.backup_heater_2_on, p.dhw_heater_on, p.dhw_disinfection_active,
-    p.error_active
+    p.error_active,
+    p.flow_temp - p.return_temp AS delta_t
 FROM (
     SELECT
         bucket,

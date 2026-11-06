@@ -567,6 +567,248 @@
       }
     },
     {
+      "id": 39,
+      "type": "stat",
+      "title": "Delta T – Space Heating (avg, target 5 K)",
+      "description": "Average Delta T across the Heat Pump (Flow Temperature − Return Temperature) over Space Heating minutes in the selected range. ~5 K is ideal: green 4–6 K, orange 3–4 / 6–7 K, red outside.",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 0,
+        "y": 18
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT avg(delta_t) AS \"Space Heating\" FROM heat_pump_1m WHERE $__timeFilter(bucket) AND operating_mode = 'Space Heating'"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "kelvin",
+          "decimals": 1,
+          "noValue": "no Space Heating minutes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 3
+              },
+              {
+                "color": "green",
+                "value": 4
+              },
+              {
+                "color": "orange",
+                "value": 6
+              },
+              {
+                "color": "red",
+                "value": 7
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 40,
+      "type": "stat",
+      "title": "Delta T – DHW (avg)",
+      "description": "Average Delta T across the Heat Pump over DHW minutes in the selected range.",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 4,
+        "y": 18
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT avg(delta_t) AS \"DHW\" FROM heat_pump_1m WHERE $__timeFilter(bucket) AND operating_mode = 'DHW'"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "kelvin",
+          "decimals": 1,
+          "noValue": "no DHW minutes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 41,
+      "type": "timeseries",
+      "title": "Delta T across the Heat Pump by Operating Mode (5 K = Space Heating target)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 18
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT bucket AS time,\n  CASE WHEN operating_mode = 'Space Heating' THEN delta_t END AS \"Space Heating\",\n  CASE WHEN operating_mode = 'DHW' THEN delta_t END AS \"DHW\"\nFROM heat_pump_1m WHERE $__timeFilter(bucket) ORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "kelvin",
+          "decimals": 1,
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "spanNulls": false,
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 5
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Space Heating"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DHW"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "min",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
       "id": 11,
       "type": "row",
       "title": "COP",
@@ -575,7 +817,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 26
       },
       "panels": []
     },
@@ -591,7 +833,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 19
+        "y": 27
       },
       "targets": [
         {
@@ -645,7 +887,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 27
       },
       "targets": [
         {
@@ -706,7 +948,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 36
       },
       "targets": [
         {
@@ -763,7 +1005,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 36
+        "y": 44
       },
       "targets": [
         {
@@ -815,7 +1057,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 53
       },
       "panels": []
     },
@@ -831,7 +1073,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 46
+        "y": 54
       },
       "targets": [
         {
@@ -896,7 +1138,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 46
+        "y": 54
       },
       "targets": [
         {
@@ -942,7 +1184,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 46
+        "y": 54
       },
       "targets": [
         {
@@ -986,7 +1228,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 46
+        "y": 54
       },
       "targets": [
         {
@@ -1029,7 +1271,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 52
+        "y": 60
       },
       "targets": [
         {
@@ -1101,7 +1343,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 52
+        "y": 60
       },
       "targets": [
         {
@@ -1145,7 +1387,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 61
+        "y": 69
       },
       "targets": [
         {
@@ -1199,7 +1441,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 61
+        "y": 69
       },
       "targets": [
         {
@@ -1252,7 +1494,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 61
+        "y": 69
       },
       "targets": [
         {
@@ -1303,7 +1545,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 70
+        "y": 78
       },
       "panels": []
     },
@@ -1319,7 +1561,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 71
+        "y": 79
       },
       "targets": [
         {
@@ -1384,7 +1626,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 71
+        "y": 79
       },
       "targets": [
         {
@@ -1436,7 +1678,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 71
+        "y": 79
       },
       "targets": [
         {
@@ -1485,7 +1727,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 80
+        "y": 88
       },
       "panels": []
     },
@@ -1501,7 +1743,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 81
+        "y": 89
       },
       "targets": [
         {
@@ -1553,7 +1795,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 81
+        "y": 89
       },
       "targets": [
         {
@@ -1605,7 +1847,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 81
+        "y": 89
       },
       "targets": [
         {
@@ -1657,7 +1899,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 89
+        "y": 97
       },
       "targets": [
         {
@@ -1709,7 +1951,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 89
+        "y": 97
       },
       "targets": [
         {
@@ -1761,7 +2003,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 89
+        "y": 97
       },
       "targets": [
         {
@@ -1810,7 +2052,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 97
+        "y": 105
       },
       "panels": []
     },
@@ -1826,7 +2068,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 98
+        "y": 106
       },
       "targets": [
         {

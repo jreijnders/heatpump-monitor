@@ -2,6 +2,7 @@ package analytics_test
 
 import (
 	"context"
+	"math"
 	"testing"
 	"time"
 )
@@ -133,6 +134,34 @@ func TestViewColumnsAppendOnly(t *testing.T) {
 		}
 	}
 }
+
+// Delta T across the Heat Pump = Flow Temperature (outlet) - Return Temperature (inlet), per minute.
+func TestHeatPumpDeltaT(t *testing.T) {
+	const d = 18
+	var rows []row
+	for i := 0; i < 6; i++ {
+		rows = append(rows,
+			row{at(d, 10, 0, i*10), "heat_pump", "flow_temp", 40.5},
+			row{at(d, 10, 0, i*10), "heat_pump", "return_temp", 35.0},
+		)
+	}
+	rows = append(rows, row{at(d, 10, 1, 0), "heat_pump", "flow_temp", 41}) // no return_temp: NULL
+	insert(t, rows)
+	refresh(t, d)
+
+	for minute, want := range map[int]*float64{0: fptr(5.5), 1: nil} {
+		var got *float64
+		if err := pool.QueryRow(context.Background(),
+			"SELECT delta_t FROM heat_pump_1m WHERE bucket = $1", at(d, 10, minute, 0)).Scan(&got); err != nil {
+			t.Fatal(err)
+		}
+		if (got == nil) != (want == nil) || (got != nil && math.Abs(*got-*want) > 1e-9) {
+			t.Errorf("minute %d: delta_t = %v, want %v", minute, got, want)
+		}
+	}
+}
+
+func fptr(f float64) *float64 { return &f }
 
 func TestHeatPumpExtraMetrics(t *testing.T) {
 	const d = 13
