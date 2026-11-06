@@ -59,6 +59,11 @@ services:
     build: ./ingester
     entrypoint: ["/prices"]
     restart: unless-stopped
+    # Needs public DNS: the compose network's embedded DNS has no usable upstream on the server
+    # (host resolver is 127.0.0.1 = Pi-hole, unreachable from containers). Pi-hole first, then 1.1.1.1.
+    dns:
+      - ${DNS_SERVER:-192.168.1.40}
+      - 1.1.1.1
     depends_on:
       db-migrate:
         condition: service_completed_successfully

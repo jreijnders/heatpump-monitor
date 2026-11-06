@@ -19,6 +19,9 @@ import (
 	"heatpump-monitor/ingester/internal/prices"
 )
 
+// retryAfterFailure: a failed sync (API or DNS hiccup) is retried sooner than the normal interval.
+const retryAfterFailure = 5 * time.Minute
+
 type config struct {
 	databaseURL  string
 	baseURL      string
@@ -97,8 +100,10 @@ func run(cfg config) error {
 		today := time.Now().In(loc)
 		from := time.Date(today.Year(), today.Month(), today.Day()-back, 0, 0, 0, 0, loc)
 		to := time.Date(today.Year(), today.Month(), today.Day()+2, 0, 0, 0, 0, loc)
+		wait := cfg.interval
 		if err := sync(ctx, client, pool, from, to); err != nil {
-			slog.Warn("price sync failed", "err", err, "retry_in", cfg.interval)
+			wait = min(wait, retryAfterFailure)
+			slog.Warn("price sync failed", "err", err, "retry_in", wait.String())
 		} else {
 			back = 2
 		}
@@ -106,7 +111,7 @@ func run(cfg config) error {
 		case <-ctx.Done():
 			slog.Info("stopped")
 			return nil
-		case <-time.After(cfg.interval):
+		case <-time.After(wait):
 		}
 	}
 }
