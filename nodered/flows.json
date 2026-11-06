@@ -1,0 +1,1409 @@
+[
+  {
+    "id": "21d2fc8df170e634",
+    "type": "tab",
+    "label": "LG Heatpump",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "35b24b20.e53a34",
+    "type": "tab",
+    "label": "Flow 4",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "a6c2b30e7d452d55",
+    "type": "modbus-client",
+    "name": "ModbusRTU",
+    "clienttype": "simpleser",
+    "bufferCommands": true,
+    "stateLogEnabled": false,
+    "queueLogEnabled": false,
+    "failureLogEnabled": true,
+    "tcpHost": "127.0.0.1",
+    "tcpPort": "502",
+    "tcpType": "DEFAULT",
+    "serialPort": "/dev/ttyUSB1",
+    "serialType": "RTU-BUFFERD",
+    "serialBaudrate": "9600",
+    "serialDatabits": "8",
+    "serialStopbits": "1",
+    "serialParity": "none",
+    "serialConnectionDelay": "100",
+    "serialAsciiResponseStartDelimiter": "0x3A",
+    "unit_id": "1",
+    "commandDelay": "10",
+    "clientTimeout": "1000",
+    "reconnectOnTimeout": true,
+    "reconnectTimeout": "2000",
+    "parallelUnitIdsAllowed": false,
+    "showWarnings": true,
+    "showLogs": true
+  },
+  {
+    "id": "8ec630e3667c0136",
+    "type": "mqtt-broker",
+    "name": "",
+    "broker": "192.168.1.40",
+    "port": "1883",
+    "clientid": "",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthRetain": "true",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": ""
+  },
+  {
+    "id": "d3d97e939de5969c",
+    "type": "mbus-client",
+    "name": "",
+    "clienttype": "serial",
+    "tcpHost": "127.0.0.1",
+    "tcpPort": "10001",
+    "tcpTimeout": "4000",
+    "serialPort": "/dev/ttyUSB1",
+    "serialBaudrate": "2400",
+    "reconnectTimeout": "3000",
+    "autoScan": false,
+    "storeDevices": false,
+    "disableLogs": false
+  },
+  {
+    "id": "f935c11c.41462",
+    "type": "mqtt-broker",
+    "name": "MQTT",
+    "broker": "core-mosquitto",
+    "port": "1883",
+    "clientid": "",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": ""
+  },
+  {
+    "id": "dfb50251.88088",
+    "type": "mbus-client",
+    "name": "",
+    "clienttype": "serial",
+    "tcpHost": "127.0.0.1",
+    "tcpPort": "10001",
+    "tcpTimeout": "4000",
+    "serialPort": "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AD0K7SLG-if00-port0",
+    "serialBaudrate": "2400",
+    "reconnectTimeout": "30000",
+    "autoScan": false,
+    "storeDevices": true,
+    "disableLogs": false
+  },
+  {
+    "id": "b8af9f24.8bce",
+    "type": "mbus-client",
+    "name": "Kamstrup",
+    "clienttype": "serial",
+    "tcpHost": "127.0.0.1",
+    "tcpPort": "10001",
+    "tcpTimeout": "4000",
+    "serialPort": "/dev/ttyUSB0",
+    "serialBaudrate": "2400",
+    "reconnectTimeout": "30000",
+    "autoScan": false,
+    "storeDevices": true,
+    "disableLogs": false
+  },
+  {
+    "id": "e55023e1.1202d",
+    "type": "mqtt-broker",
+    "name": "",
+    "broker": "srv-mqtt.local.silmo.net",
+    "port": "1883",
+    "clientid": "raspberry-sma-nodered",
+    "autoConnect": true,
+    "usetls": false,
+    "compatmode": false,
+    "protocolVersion": 4,
+    "keepalive": "60",
+    "cleansession": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": ""
+  },
+  {
+    "id": "bc9a0d815bdd7702",
+    "type": "modbus-client",
+    "name": "Modbus_TCP",
+    "clienttype": "tcp",
+    "bufferCommands": true,
+    "stateLogEnabled": false,
+    "queueLogEnabled": false,
+    "failureLogEnabled": true,
+    "tcpHost": "192.168.1.40",
+    "tcpPort": "502",
+    "tcpType": "DEFAULT",
+    "serialPort": "/dev/ttyUSB",
+    "serialType": "RTU-BUFFERD",
+    "serialBaudrate": "9600",
+    "serialDatabits": "8",
+    "serialStopbits": "1",
+    "serialParity": "none",
+    "serialConnectionDelay": "100",
+    "serialAsciiResponseStartDelimiter": "0x3A",
+    "unit_id": "1",
+    "commandDelay": "1",
+    "clientTimeout": "1000",
+    "reconnectOnTimeout": true,
+    "reconnectTimeout": "2000",
+    "parallelUnitIdsAllowed": true,
+    "showWarnings": true,
+    "showLogs": true
+  },
+  {
+    "id": "4009050ee9c6c1f7",
+    "type": "mqtt-sparkplug-broker",
+    "name": "test_local",
+    "deviceGroup": "test",
+    "eonName": "heatpump_jre",
+    "broker": "192.168.1.140",
+    "port": "443",
+    "tls": "7233c9f7b6345c98",
+    "clientid": "sparktest",
+    "usetls": false,
+    "protocolVersion": 4,
+    "keepalive": "60",
+    "cleansession": true,
+    "enableStoreForward": false,
+    "compressAlgorithm": "",
+    "aliasMetrics": false,
+    "useTemplates": true,
+    "manualEoNBirth": false,
+    "primaryScada": ""
+  },
+  {
+    "id": "7233c9f7b6345c98",
+    "type": "tls-config",
+    "name": "",
+    "cert": "",
+    "key": "",
+    "ca": "",
+    "certname": "",
+    "keyname": "",
+    "caname": "",
+    "servername": "",
+    "verifyservercert": false,
+    "alpnprotocol": ""
+  },
+  {
+    "id": "902e549c717f4beb",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "0",
+    "retain": "true",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 1110,
+    "y": 40,
+    "wires": []
+  },
+  {
+    "id": "56a8d195b60b1de8",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "function 1",
+    "func": "var input = [];\ninput = msg.payload;\n\n// Send to MQTT\nmsg.topic = \"lg_heatpump/lg_error_code\";\nmsg.payload =input[0];\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_operation_cycle\";\nmsg.payload = input[1];\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_water_inlet_temp\";\nmsg.payload = (input[2] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_water_outlet_temp\";\nmsg.payload = (input[3] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_backup_heater_temp\";\nmsg.payload = (input[4] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_dhw_water_temp\";\nmsg.payload = (input[5] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_room_air_temp_circuit1\";\nmsg.payload = (input[7] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_current_flow_rate\";\nmsg.payload = parseFloat((input[8] * 0.006).toFixed(2));\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_energy_State\";\nmsg.payload = input[11];\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_outdoor_air_temp\";\nmsg.payload = (input[12] / 10.0);\nnode.send(msg);\n\n\n\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 800,
+    "y": 40,
+    "wires": [
+      [
+        "902e549c717f4beb"
+      ]
+    ]
+  },
+  {
+    "id": "b646d9b89cc0c55d",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "1",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 90,
+    "y": 40,
+    "wires": [
+      [
+        "ad8b98de163034bd",
+        "bc43a237c5f2158c",
+        "f02cf82f3485e016",
+        "c016ada946af3a6d"
+      ]
+    ]
+  },
+  {
+    "id": "ad8b98de163034bd",
+    "type": "modbus-flex-sequencer",
+    "z": "21d2fc8df170e634",
+    "name": "LG Read InputReg_1",
+    "sequences": [
+      {
+        "name": "Read input registers",
+        "unitid": "1",
+        "fc": "FC4",
+        "address": "0",
+        "quantity": "14"
+      }
+    ],
+    "server": "a6c2b30e7d452d55",
+    "showStatusActivities": true,
+    "showErrors": true,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": true,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 400,
+    "y": 40,
+    "wires": [
+      [
+        "2f5cfa6aea3c7a76",
+        "eaec6ae60efbf829"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "fae497e1d84bc2f7",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "function 2",
+    "func": "var input = [];\ninput = msg.payload;\n\nmsg.topic = \"lg_heatpump/lg_pipe_in_temp\";\nmsg.payload = (input[0] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_pipe_out_temp\";\nmsg.payload = (input[1] / 1000.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_suction_temp\";\nmsg.payload = (input[2] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_fan_speed\";\nmsg.payload = input[3];\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lh_hx_temp\";\nmsg.payload = (input[4] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_high_press\";\nmsg.payload = (input[6] / 100.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_low_press\";\nmsg.payload = (input[7] / 100.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_inverter\";\nmsg.payload = input[8];\nnode.send(msg);\n\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 800,
+    "y": 180,
+    "wires": [
+      [
+        "c94d1177757f495d"
+      ]
+    ]
+  },
+  {
+    "id": "bc43a237c5f2158c",
+    "type": "modbus-flex-sequencer",
+    "z": "21d2fc8df170e634",
+    "name": "LG Read Discrete",
+    "sequences": [
+      {
+        "name": "Read coils",
+        "unitid": "1",
+        "fc": "FC2",
+        "address": "0",
+        "quantity": "14"
+      }
+    ],
+    "server": "a6c2b30e7d452d55",
+    "showStatusActivities": true,
+    "showErrors": true,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": true,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 390,
+    "y": 320,
+    "wires": [
+      [
+        "53ba099dfd2d178b"
+      ],
+      [
+        "ac07e9302c445eb0"
+      ]
+    ]
+  },
+  {
+    "id": "ef1eec9ddd8b3404",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "function 5",
+    "func": "var input = [];\ninput = msg.payload;\nfunction boolToInt(bool) { return +bool }\n\nmsg.topic = \"lg_heatpump/lg_water_flow_status\";\nmsg.payload = boolToInt(input[0]);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_water_pump_status\";\nmsg.payload = boolToInt(input[1]);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_ext_water_pump_status\";\nmsg.payload = boolToInt(input[2]);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_compressor_status\";\nmsg.payload = boolToInt(input[3]);\nnode.send(msg);\nglobal.set(\"compressor_status\", input[3]);\n\nmsg.topic = \"lg_heatpump/lg_defrosting_status\";\nmsg.payload = boolToInt(input[4]);\nnode.send(msg);\nglobal.set(\"defrost_status\", input[4]);\n\nmsg.topic = \"lg_heatpump/lg_dhw_heating_status\";\nmsg.payload = boolToInt(input[5]);\nnode.send(msg);\nglobal.set(\"dhw_status\", input[5]);\n\nmsg.topic = \"lg_heatpump/lg_dhw_desinfection_status\";\nmsg.payload = boolToInt(input[6]);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_silent_mode_status\";\nmsg.payload = boolToInt(input[7]);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_error_status\";\nmsg.payload = boolToInt(input[8]);\nnode.send(msg);\n\n\n\n\n\n\n\n\n\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 800,
+    "y": 320,
+    "wires": [
+      [
+        "12874e6d93c29745"
+      ]
+    ]
+  },
+  {
+    "id": "c94d1177757f495d",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 1110,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "12874e6d93c29745",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 1110,
+    "y": 320,
+    "wires": []
+  },
+  {
+    "id": "a5de702d7f6e9094",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "0",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 510,
+    "y": 880,
+    "wires": []
+  },
+  {
+    "id": "6fe23dd0557e508a",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "Discover LG",
+    "func": "// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_error_code/config\";\nmsg.payload = {\n    \"name\": \"Error code\",\n    \"unique_id\": \"lg_error_code\",\n    \"object_id\": \"lg_error_code\",\n    \"icon\": \"mdi:alarm-light-outline\",\n    \"state_topic\": \"lg_heatpump/lg_error_code\",\n    \"unit_of_measurement\": \"\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_operation_cycle/config\";\nmsg.payload = {\n    \"name\": \"Operation cycle\",\n    \"unique_id\": \"lg_operation_cycle\",\n    \"object_id\": \"lg_operation_cycle\",\n    \"icon\": \"mdi:alarm-light-outline\",\n    \"state_topic\": \"lg_heatpump/lg_operation_cycle\",\n    \"unit_of_measurement\": \"\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_water_inlet_temp/config\";\nmsg.payload = {\n    \"name\": \"Water inlet temperature\",\n    \"unique_id\": \"lg_water_inlet_temp\",\n    \"object_id\": \"lg_water_inlet_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_water_inlet_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_water_outlet_temp/config\";\nmsg.payload = {\n    \"name\": \"Water outlet temperature\",\n    \"unique_id\": \"lg_water_outlet_temp\",\n    \"object_id\": \"lg_water_outlet_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_water_outlet_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_backup_heater_temp/config\";\nmsg.payload = {\n    \"name\": \"Backup heater temperature\",\n    \"unique_id\": \"lg_backup_heater_temp\",\n    \"object_id\": \"lg_backup_heater_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_backup_heater_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_dhw_water_temp/config\";\nmsg.payload = {\n    \"name\": \"Domestic hotwater temperature\",\n    \"unique_id\": \"lg_dhw_water_temp\",\n    \"object_id\": \"lg_dhw_water_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_dhw_water_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_room_air_temp_circuit1/config\";\nmsg.payload = {\n    \"name\": \" C1 Room air temperature temperature\",\n    \"unique_id\": \"lg_room_air_temp_circuit1\",\n    \"object_id\": \"lg_room_air_temp_circuit1\",\n    \"icon\": \"mdi:thermometer-outline\",\n    \"state_topic\": \"lg_heatpump/lg_room_air_temp_circuit1\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_current_flow_rate/config\";\nmsg.payload = {\n    \"name\": \" Current water flowrate\",\n    \"unique_id\": \"lg_current_flow_rate\",\n    \"object_id\": \"lg_current_flow_rate\",\n    \"icon\": \"mdi:water-sync\",\n    \"state_topic\": \"lg_heatpump/lg_current_flow_rate\",\n    \"unit_of_measurement\": \"m³/h\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_energy_State/config\";\nmsg.payload = {\n    \"name\": \" Current water flowrate\",\n    \"unique_id\": \"lg_energy_State\",\n    \"object_id\": \"lg_energy_State\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"lg_heatpump/lg_energy_State\",\n    \"unit_of_measurement\": \"-\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_outdoor_air_temp/config\";\nmsg.payload = {\n    \"name\": \"Outdoor air temperature\",\n    \"unique_id\": \"lg_outdoor_air_temp\",\n    \"object_id\": \"lg_outdoor_air_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_outdoor_air_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_pipe_in_temp/config\";\nmsg.payload = {\n    \"name\": \"Pipe in temperature\",\n    \"unique_id\": \"lg_pipe_in_temp\",\n    \"object_id\": \"lg_pipe_in_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_pipe_in_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_pipe_out_temp/config\";\nmsg.payload = {\n    \"name\": \"Pipe out temperature\",\n    \"unique_id\": \"lg_pipe_out_temp\",\n    \"object_id\": \"lg_pipe_out_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_pipe_out_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_suction_temp/config\";\nmsg.payload = {\n    \"name\": \"Suction line temperature\",\n    \"unique_id\": \"lg_suction_temp\",\n    \"object_id\": \"lg_suction_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_suction_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_fan_speed/config\";\nmsg.payload = {\n    \"name\": \"Fanspeed\",\n    \"unique_id\": \"lg_fan_speed\",\n    \"object_id\": \"lg_fan_speed\",\n    \"icon\": \"mdi:fan\",\n    \"state_topic\": \"lg_heatpump/lg_fan_speed\",\n    \"unit_of_measurement\": \"RPM\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lh_hx_temp/config\";\nmsg.payload = {\n    \"name\": \"Heatexchanger temperature\",\n    \"unique_id\": \"lh_hx_temp\",\n    \"object_id\": \"lh_hx_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lh_hx_temp\",\n    \"unit_of_measurement\": \"°C\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_high_press/config\";\nmsg.payload = {\n    \"name\": \"Discharge refrigant pressure\",\n    \"unique_id\": \"lg_high_press\",\n    \"object_id\": \"lg_high_press\",\n    \"icon\": \"mdi:gauge-full\",\n    \"state_topic\": \"lg_heatpump/lg_high_press\",\n    \"unit_of_measurement\": \"Bar(g)\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_low_press/config\";\nmsg.payload = {\n    \"name\": \"Suction refrigant pressure\",\n    \"unique_id\": \"lg_low_press\",\n    \"object_id\": \"lg_low_press\",\n    \"icon\": \"mdi:gauge-low\",\n    \"state_topic\": \"lg_heatpump/lg_low_press\",\n    \"unit_of_measurement\": \"Bar(g)\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/lg_heatpump/lg_inverter/config\";\nmsg.payload = {\n    \"name\": \"Compressor frequency\",\n    \"unique_id\": \"lg_inverter\",\n    \"object_id\": \"lg_inverter\",\n    \"icon\": \"mdi:engine-outline\",\n    \"state_topic\": \"lg_heatpump/lg_inverter\",\n    \"unit_of_measurement\": \"Hz\",\n \n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_water_flow_status/config\";\nmsg.payload = {\n    \"name\": \"Water flow\",\n    \"unique_id\": \"lg_water_flow_status\",\n    \"object_id\": \"lg_water_flow_status\",\n    \"icon\": \"mdi:water-check\",\n    \"state_topic\": \"lg_heatpump/lg_water_flow_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_water_pump_status/config\";\nmsg.payload = {\n    \"name\": \"Internal waterpump\",\n    \"unique_id\": \"lg_water_pump_status\",\n    \"object_id\": \"lg_water_pump_status\",\n    \"icon\": \"mdi:pump\",\n    \"state_topic\": \"lg_heatpump/lg_water_pump_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_ext_water_pump_status/config\";\nmsg.payload = {\n    \"name\": \"External waterpump\",\n    \"unique_id\": \"lg_ext_water_pump_status\",\n    \"object_id\": \"lg_ext_water_pump_status\",\n    \"icon\": \"mdi:pump\",\n    \"state_topic\": \"lg_heatpump/lg_ext_water_pump_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_compressor_status/config\";\nmsg.payload = {\n    \"name\": \"External waterpump\",\n    \"unique_id\": \"lg_compressor_status\",\n    \"object_id\": \"lg_compressor_status\",\n    \"icon\": \"mdi:engine-outline\",\n    \"state_topic\": \"lg_heatpump/lg_compressor_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_defrosting_status/config\";\nmsg.payload = {\n    \"name\": \"Defrost active\",\n    \"unique_id\": \"lg_defrosting_status\",\n    \"object_id\": \"lg_defrosting_status\",\n    \"icon\": \"mdi:snowflake-melt\",\n    \"state_topic\": \"lg_heatpump/lg_defrosting_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_dhw_desinfection_status/config\";\nmsg.payload = {\n    \"name\": \"Domestic hotwater desinfection active\",\n    \"unique_id\": \"lg_dhw_desinfection_status\",\n    \"object_id\": \"lg_dhw_desinfection_status\",\n    \"icon\": \"mdi:bacteria\",\n    \"state_topic\": \"lg_heatpump/lg_dhw_desinfection_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_dhw_heating_status/config\";\nmsg.payload = {\n    \"name\": \"Domestic hotwater heating active\",\n    \"unique_id\": \"lg_dhw_heating_status\",\n    \"object_id\": \"lg_dhw_heating_status\",\n    \"icon\": \"mdi:bugle\",\n    \"state_topic\": \"lg_heatpump/lg_dhw_heating_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_silent_mode_status/config\";\nmsg.payload = {\n    \"name\": \"Silent mode active\",\n    \"unique_id\": \"lg_silent_mode_status\",\n    \"object_id\": \"lg_silent_mode_status\",\n    \"icon\": \"mdi:bugle\",\n    \"state_topic\": \"lg_heatpump/lg_silent_mode_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Binary Sensor\nmsg.topic = \"homeassistant/binary_sensor/lg_heatpump/lg_error_status/config\";\nmsg.payload = {\n    \"name\": \"Error status\",\n    \"unique_id\": \"lg_error_status  \",\n    \"object_id\": \"lg_error_status  \",\n    \"icon\": \"mdi:alert-circle\",\n    \"state_topic\": \"lg_heatpump/lg_error_status\",\n    \"payload_on\": \"1\",\n    \"payload_off\": \"0\",\n\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n\n\n\n\n// Switch\nmsg.topic = \"homeassistant/switch/lg_heatpump/lg_enable_disable_heating_cooling/config\";\nmsg.payload = {\n    \"name\": \"Enable cooling / heating\",\n    \"unique_id\": \"lg_enable_disable_heating_cooling\",\n    \"object_id\": \"lg_enable_disable_heating_cooling\",\n    \"icon\": \"mdi:power\",\n    \"state_topic\": \"lg_heatpump/lg_enable_disable_heating_cooling\",\n    \"command_topic\": \"lg_heatpump/lg_enable_disable_heating_cooling-ref\",\n    \"state_on\": 1,\n    \"state_off\": 0,\n    \"payload_on\": 1,\n    \"payload_off\": 0,\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Switch\nmsg.topic = \"homeassistant/switch/lg_heatpump/lg_enable_disable_dhw/config\";\nmsg.payload = {\n    \"name\": \"Enable domestic hotwater\",\n    \"unique_id\": \"lg_enable_disable_dhw\",\n    \"object_id\": \"lg_enable_disable_dhw\",\n    \"icon\": \"mdi:hand-water\",\n    \"state_topic\": \"lg_heatpump/lg_enable_disable_dhw\",\n    \"command_topic\": \"lg_heatpump/lg_enable_disable_dhw-ref\",\n    \"state_on\": 1,\n    \"state_off\": 0,\n    \"payload_on\": 1,\n    \"payload_off\": 0,\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Switch\nmsg.topic = \"homeassistant/switch/lg_heatpump/lg_silent_mode_set/config\";\nmsg.payload = {\n    \"name\": \"Silent mode\",\n    \"unique_id\": \"lg_silent_mode_set\",\n    \"object_id\": \"lg_silent_mode_set\",\n    \"icon\": \"mdi:bugle\",\n    \"state_topic\": \"lg_heatpump/lg_silent_mode_set\",\n    \"command_topic\": \"lg_heatpump/lg_silent_mode_set-ref\",\n    \"state_on\": 1,\n    \"state_off\": 0,\n    \"payload_on\": 1,\n    \"payload_off\": 0,\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Switch\nmsg.topic = \"homeassistant/switch/lg_heatpump/lg_trigger_desinfection_operation/config\";\nmsg.payload = {\n    \"name\": \"Domesitc hotwater desinfection cycle\",\n    \"unique_id\": \"lg_trigger_desinfection_operation\",\n    \"object_id\": \"lg_trigger_desinfection_operation\",\n    \"icon\": \"mdi:bug-check\",\n    \"state_topic\": \"lg_heatpump/lg_trigger_desinfection_operation\",\n    \"command_topic\": \"lg_heatpump/lg_trigger_desinfection_operation-ref\",\n    \"state_on\": 1,\n    \"state_off\": 0,\n    \"payload_on\": 1,\n    \"payload_off\": 0,\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Number\nmsg.topic = \"homeassistant/number/lg_heatpump/lg_target_temp_circuit1/config\";\nmsg.payload = {\n    \"name\": \"Circuit 1 target temperature\",\n    \"unique_id\": \"lg_target_temp_circuit1\",\n    \"object_id\": \"lg_target_temp_circuit1\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_target_temp_circuit1\",\n    \"unit_of_measurement\": \"°C\",\n    \"command_topic\": \"lg_heatpump/lg_target_temp_circuit1-ref\",\n    \"min\": 10,\n    \"max\": 65,\n    \"step\": \"0.50\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Number\nmsg.topic = \"homeassistant/number/lg_heatpump/lg_room_air_temp_circuit1_holding/config\";\nmsg.payload = {\n    \"name\": \"Circuit 1 room air setpoint\",\n    \"unique_id\": \"lg_room_air_temp_circuit1_holding\",\n    \"object_id\": \"lg_room_air_temp_circuit1_holding\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_room_air_temp_circuit1_holding\",\n    \"unit_of_measurement\": \"°C\",\n    \"command_topic\": \"lg_heatpump/lg_room_air_temp_circuit1_holding-ref\",\n    \"min\": 10,\n    \"max\": 40,\n    \"step\": \"0.50\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Number\nmsg.topic = \"homeassistant/number/lg_heatpump/lg_shift_value_in_auto_mode_circuit1/config\";\nmsg.payload = {\n    \"name\": \"Circuit 1 shift value in auto mode\",\n    \"unique_id\": \"lg_shift_value_in_auto_mode_circuit1\",\n    \"object_id\": \"lg_shift_value_in_auto_mode_circuit1\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_shift_value_in_auto_mode_circuit1\",\n    \"unit_of_measurement\": \"K\",\n    \"command_topic\": \"lg_heatpump/lg_shift_value_in_auto_mode_circuit1-ref\",\n    \"min\": -50,\n    \"max\": 50,\n    \"step\": \"0.50\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Number\nmsg.topic = \"homeassistant/number/lg_heatpump/lg_shift_value_in_auto_mode_circuit2/config\";\nmsg.payload = {\n    \"name\": \"Circuit 2 shift value in auto mode\",\n    \"unique_id\": \"lg_shift_value_in_auto_mode_circuit2\",\n    \"object_id\": \"lg_shift_value_in_auto_mode_circuit2\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_shift_value_in_auto_mode_circuit2\",\n    \"unit_of_measurement\": \"K\",\n    \"command_topic\": \"lg_heatpump/lg_shift_value_in_auto_mode_circuit2-ref\",\n    \"min\": -50,\n    \"max\": 50,\n    \"step\": \"0.50\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Number\nmsg.topic = \"homeassistant/number/lg_heatpump/lg_dhw_target_temp/config\";\nmsg.payload = {\n    \"name\": \"Domesitc hotwater target\",\n    \"unique_id\": \"lg_dhw_target_temp\",\n    \"object_id\": \"lg_dhw_target_temp\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"lg_heatpump/lg_dhw_target_temp\",\n    \"unit_of_measurement\": \"°C\",\n    \"command_topic\": \"lg_heatpump/lg_dhw_target_temp-ref\",\n    \"min\": 10,\n    \"max\": 65,\n    \"step\": \"1.00\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);\n\n// Number\nmsg.topic = \"homeassistant/number/lg_heatpump/lg_set_energy_state/config\";\nmsg.payload = {\n    \"name\": \"Energy control state\",\n    \"unique_id\": \"lg_set_energy_state\",\n    \"object_id\": \"lg_set_energy_state\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"lg_heatpump/lg_set_energy_state\",\n    \"unit_of_measurement\": \"-\",\n    \"command_topic\": \"lg_heatpump/lg_set_energy_state-ref\",\n    \"min\": 0,\n    \"max\": 8,\n    \"step\": \"1.00\",\n    \"device\": {\n        \"name\": \"LG ThermaV\",\n        \"model\": \"9kW\",\n        \"manufacturer\": \"LG Electronics\",\n        \"identifiers\": \"lg_heatpump\",\n    }\n}\nnode.send(msg);",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 350,
+    "y": 880,
+    "wires": [
+      [
+        "a5de702d7f6e9094"
+      ]
+    ]
+  },
+  {
+    "id": "8aaad03e90d0563f",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "props": [],
+    "repeat": "300",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 150,
+    "y": 880,
+    "wires": [
+      [
+        "6fe23dd0557e508a"
+      ]
+    ]
+  },
+  {
+    "id": "2f5cfa6aea3c7a76",
+    "type": "delay",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "pauseType": "rate",
+    "timeout": "5",
+    "timeoutUnits": "seconds",
+    "rate": "10",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": true,
+    "allowrate": false,
+    "outputs": 1,
+    "x": 620,
+    "y": 40,
+    "wires": [
+      [
+        "56a8d195b60b1de8"
+      ]
+    ]
+  },
+  {
+    "id": "f0fc6495c295a8d7",
+    "type": "delay",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "pauseType": "rate",
+    "timeout": "5",
+    "timeoutUnits": "seconds",
+    "rate": "10",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": true,
+    "allowrate": false,
+    "outputs": 1,
+    "x": 620,
+    "y": 180,
+    "wires": [
+      [
+        "fae497e1d84bc2f7"
+      ]
+    ]
+  },
+  {
+    "id": "53ba099dfd2d178b",
+    "type": "delay",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "pauseType": "rate",
+    "timeout": "5",
+    "timeoutUnits": "seconds",
+    "rate": "10",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": true,
+    "allowrate": false,
+    "outputs": 1,
+    "x": 620,
+    "y": 320,
+    "wires": [
+      [
+        "ef1eec9ddd8b3404",
+        "2caab2c05e5fa1bc"
+      ]
+    ]
+  },
+  {
+    "id": "b3ae0448.822d08",
+    "type": "comment",
+    "z": "21d2fc8df170e634",
+    "name": "SDM220 Energy Meter",
+    "info": "",
+    "x": 320,
+    "y": 980,
+    "wires": []
+  },
+  {
+    "id": "e4d3fade.1132a8",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "To MQTT",
+    "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4);\nvar t_float = 0.0\n\n// Voltage \nmsg.topic = \"hp_electric/voltage\";\nbuf.writeUInt16BE(pay[1], 1)\nbuf.writeUInt16BE(pay[0], 0)\nmsg.payload = parseFloat(buf.readFloatBE(0).toFixed(2));\nnode.send(msg);\n\n// Current\nmsg.topic = \"hp_electric/current\";\nbuf.writeUInt16BE(pay[7], 1)\nbuf.writeUInt16BE(pay[6], 0)\nmsg.payload = parseFloat(buf.readFloatBE(0).toFixed(2));\nnode.send(msg);\n\n// Active Power\nmsg.topic = \"hp_electric/active_power\";\nbuf.writeUInt16BE(pay[13], 1)\nbuf.writeUInt16BE(pay[12], 0)\nt_float = (buf.readFloatBE(0) / 1000)\nmsg.payload = parseFloat(t_float.toFixed(2));\nnode.send(msg);\n\n// Apparant power\nmsg.topic = \"hp_electric/apparant_power\";\nbuf.writeUInt16BE(pay[19], 1)\nbuf.writeUInt16BE(pay[18], 0)\nt_float = (buf.readFloatBE(0) / 1000)\nflow.set(\"pe\", parseFloat(t_float.toFixed(2)));\nmsg.payload = parseFloat(t_float.toFixed(2));\nnode.send(msg);\n\n// Reactive power\nmsg.topic = \"hp_electric/reactive_power\";\nbuf.writeUInt16BE(pay[25], 1)\nbuf.writeUInt16BE(pay[24], 0)\nt_float = (buf.readFloatBE(0) / 1000)\nmsg.payload = parseFloat(t_float.toFixed(2));\nnode.send(msg);\n\n// Power factor\nmsg.topic = \"hp_electric/power_factor\";\nbuf.writeUInt16BE(pay[31], 1)\nbuf.writeUInt16BE(pay[30], 0)\nmsg.payload = parseFloat(buf.readFloatBE(0).toFixed(2));\nnode.send(msg);\n\n// Phase angle\nmsg.topic = \"hp_electric/phase_angle\";\nbuf.writeUInt16BE(pay[37], 1)\nbuf.writeUInt16BE(pay[36], 0)\nmsg.payload = parseFloat(buf.readFloatBE(0).toFixed(2));\nnode.send(msg);\n\n// Frequency\nmsg.topic = \"hp_electric/frequency\";\nbuf.writeUInt16BE(pay[71], 1)\nbuf.writeUInt16BE(pay[70], 0)\nmsg.payload = parseFloat(buf.readFloatBE(0).toFixed(2));\nnode.send(msg);\n\n// Import active energy\nmsg.topic = \"hp_electric/import_active_energy\";\nbuf.writeUInt16BE(pay[73], 1)\nbuf.writeUInt16BE(pay[72], 0)\nmsg.payload = parseFloat(buf.readFloatBE(0).toFixed(2));\nnode.send(msg);\n\n// Import reactive energy\nmsg.topic = \"hp_electric/import_reactive_energy\";\nbuf.writeUInt16BE(pay[77], 1)\nbuf.writeUInt16BE(pay[76], 0)\nmsg.payload = parseFloat(buf.readFloatBE(0).toFixed(2));\nnode.send(msg);\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 660,
+    "y": 1100,
+    "wires": [
+      [
+        "5d5aa091998510a5"
+      ]
+    ]
+  },
+  {
+    "id": "1b35ee5d.7dd512",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 656,
+    "y": 1048,
+    "wires": []
+  },
+  {
+    "id": "2caab2c05e5fa1bc",
+    "type": "modbus-flex-sequencer",
+    "z": "21d2fc8df170e634",
+    "name": "SDM220 Read",
+    "sequences": [
+      {
+        "name": "",
+        "unitid": "10",
+        "fc": "FC4",
+        "address": "0",
+        "quantity": "80"
+      }
+    ],
+    "server": "a6c2b30e7d452d55",
+    "showStatusActivities": true,
+    "showErrors": true,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": true,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 279.5,
+    "y": 1054,
+    "wires": [
+      [
+        "e4d3fade.1132a8",
+        "1b35ee5d.7dd512"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "5d5aa091998510a5",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 870,
+    "y": 1100,
+    "wires": []
+  },
+  {
+    "id": "13a26b7d34dc6b03",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "0",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 530,
+    "y": 1220,
+    "wires": []
+  },
+  {
+    "id": "f8b6fe7c5a17dc26",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "Discover SDM220",
+    "func": "// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/voltage/config\";\nmsg.payload = {\n    \"name\": \"Voltage\",\n    \"unique_id\": \"hp_electric/voltage\",\n    \"object_id\": \"hp_electric/voltage\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/voltage\",\n    \"unit_of_measurement\": \"V\",\n \n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/current/config\";\nmsg.payload = {\n    \"name\": \"Current\",\n    \"unique_id\": \"hp_electric/current\",\n    \"object_id\": \"hp_electric/current\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/current\",\n    \"unit_of_measurement\": \"A\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/active_power/config\";\nmsg.payload = {\n    \"name\": \"Active power\",\n    \"unique_id\": \"hp_electric/active_power\",\n    \"object_id\": \"hp_electric/active_power\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/active_power\",\n    \"unit_of_measurement\": \"kW\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/apparant_power/config\";\nmsg.payload = {\n    \"name\": \"Apparant power\",\n    \"unique_id\": \"hp_electric/apparant_power\",\n    \"object_id\": \"hp_electric/apparant_power\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/apparant_power\",\n    \"unit_of_measurement\": \"kVa\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/reactive_power/config\";\nmsg.payload = {\n    \"name\": \"Reactive power\",\n    \"unique_id\": \"hp_electric/reactive_power\",\n    \"object_id\": \"hp_electric/reactive_power\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/reactive_power\",\n    \"unit_of_measurement\": \"kVar\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/power_factor/config\";\nmsg.payload = {\n    \"name\": \"Powerfactor\",\n    \"unique_id\": \"hp_electric/power_factor\",\n    \"object_id\": \"hp_electric/power_factor\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/power_factor\",\n    \"unit_of_measurement\": \"-\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/phase_angle/config\";\nmsg.payload = {\n    \"name\": \"Phase angle\",\n    \"unique_id\": \"hp_electric/phase_angle\",\n    \"object_id\": \"hp_electric/phase_angle\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/phase_angle\",\n    \"unit_of_measurement\": \"°\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/frequency/config\";\nmsg.payload = {\n    \"name\": \"Frequency\",\n    \"unique_id\": \"hp_electric/frequency\",\n    \"object_id\": \"hp_electric/frequency\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/frequency\",\n    \"unit_of_measurement\": \"Hz\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/import_active_energy/config\";\nmsg.payload = {\n    \"name\": \"Import active energy\",\n    \"unique_id\": \"hp_electric/import_active_energy\",\n    \"object_id\": \"hp_electric/import_active_energy\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/import_active_energy\",\n    \"unit_of_measurement\": \"kWh\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_electric/import_reactive_energy/config\";\nmsg.payload = {\n    \"name\": \"Import reactive energy\",\n    \"unique_id\": \"hp_electric/import_reactive_energy\",\n    \"object_id\": \"hp_electric/import_reactive_energy\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_electric/import_reactive_energy\",\n    \"unit_of_measurement\": \"kVarh\",\n\n    \"device\": {\n        \"name\": \"Heatpump energy usage\",\n        \"model\": \"SDM220\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_electric\",\n    }\n}\nnode.send(msg);\n\n\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 350,
+    "y": 1220,
+    "wires": [
+      [
+        "13a26b7d34dc6b03"
+      ]
+    ]
+  },
+  {
+    "id": "f0635b1eab0bd054",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "props": [],
+    "repeat": "300",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "1",
+    "topic": "",
+    "x": 150,
+    "y": 1220,
+    "wires": [
+      [
+        "f8b6fe7c5a17dc26"
+      ]
+    ]
+  },
+  {
+    "id": "f02cf82f3485e016",
+    "type": "modbus-flex-sequencer",
+    "z": "21d2fc8df170e634",
+    "name": "LG Read InputReg_2",
+    "sequences": [
+      {
+        "name": "Read input registers",
+        "unitid": "1",
+        "fc": "FC4",
+        "address": "16",
+        "quantity": "9"
+      }
+    ],
+    "server": "a6c2b30e7d452d55",
+    "showStatusActivities": true,
+    "showErrors": true,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": true,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 400,
+    "y": 180,
+    "wires": [
+      [
+        "f0fc6495c295a8d7"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "8d1f64a58784c848",
+    "type": "modbus-write",
+    "z": "21d2fc8df170e634",
+    "name": "Write silent",
+    "showStatusActivities": true,
+    "showErrors": true,
+    "showWarnings": true,
+    "unitid": "1",
+    "dataType": "Coil",
+    "adr": "2",
+    "quantity": "1",
+    "server": "a6c2b30e7d452d55",
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 370,
+    "y": 540,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "cded0a8175f212f0",
+    "type": "modbus-write",
+    "z": "21d2fc8df170e634",
+    "name": "Write energy ",
+    "showStatusActivities": true,
+    "showErrors": true,
+    "showWarnings": true,
+    "unitid": "1",
+    "dataType": "HoldingRegister",
+    "adr": "9",
+    "quantity": "1",
+    "server": "a6c2b30e7d452d55",
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 1210,
+    "y": 720,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "484bb34fc930d758",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "0",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 530,
+    "y": 1340,
+    "wires": []
+  },
+  {
+    "id": "6aca9a0fb432ccf1",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "Discover Kamstrup",
+    "func": "// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/totalheatenergy/config\";\nmsg.payload = {\n    \"name\": \"Total heating energy\",\n    \"unique_id\": \"hp_production/totalheatenergy\",\n    \"object_id\": \"hp_production/totalheatenergy\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/totalheatenergy\",\n    \"unit_of_measurement\": \"kWh\",\n \n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/room_heatenergy/config\";\nmsg.payload = {\n    \"name\": \"Total room heating energy\",\n    \"unique_id\": \"hp_production/room_heatenergy\",\n    \"object_id\": \"hp_production/room_heatenergy\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/room_heatenergy\",\n    \"unit_of_measurement\": \"kWh\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/dhw_heatenergy/config\";\nmsg.payload = {\n    \"name\": \"Total dhw heating energy\",\n    \"unique_id\": \"hp_production/dhw_heatenergy\",\n    \"object_id\": \"hp_production/dhw_heatenergy\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/dhw_heatenergy\",\n    \"unit_of_measurement\": \"kWh\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/totalheatenergy/config\";\nmsg.payload = {\n    \"name\": \"Total heating energy\",\n    \"unique_id\": \"hp_production/totalheatenergy\",\n    \"object_id\": \"hp_production/totalheatenergy\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/totalheatenergy\",\n    \"unit_of_measurement\": \"kWh\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/flowtemperature/config\";\nmsg.payload = {\n    \"name\": \"Outlet Temperature\",\n    \"unique_id\": \"hp_production/flowtemperature\",\n    \"object_id\": \"hp_production/flowtemperature\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"hp_production/flowtemperature\",\n    \"unit_of_measurement\": \"°C\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/returntemperature/config\";\nmsg.payload = {\n    \"name\": \"Inlet Temperature\",\n    \"unique_id\": \"hp_production/returntemperature\",\n    \"object_id\": \"hp_production/returntemperature\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"hp_production/returntemperature\",\n    \"unit_of_measurement\": \"°C\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/difftemperature/config\";\nmsg.payload = {\n    \"name\": \"Temperature Difference\",\n    \"unique_id\": \"hp_production/difftemperature\",\n    \"object_id\": \"hp_production/difftemperature\",\n    \"icon\": \"mdi:thermometer-lines\",\n    \"state_topic\": \"hp_production/difftemperature\",\n    \"unit_of_measurement\": \"K\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/flowvalue/config\";\nmsg.payload = {\n    \"name\": \"Flow\",\n    \"unique_id\": \"hp_production/flowvalue\",\n    \"object_id\": \"hp_production/flowvalue\",\n    \"icon\": \"mdi:water-sync\",\n    \"state_topic\": \"hp_production/flowvalue\",\n    \"unit_of_measurement\": \"m³/h\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/power/config\";\nmsg.payload = {\n    \"name\": \"Heating Power\",\n    \"unique_id\": \"hp_production/power\",\n    \"object_id\": \"hp_production/power\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/power\",\n    \"unit_of_measurement\": \"kW\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/pe/config\";\nmsg.payload = {\n    \"name\": \"Electrical Power\",\n    \"unique_id\": \"hp_production/pe\",\n    \"object_id\": \"hp_production/pe\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/pe\",\n    \"unit_of_measurement\": \"kW\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/coph/config\";\nmsg.payload = {\n    \"name\": \"COPH\",\n    \"unique_id\": \"hp_production/coph\",\n    \"object_id\": \"hp_production/coph\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/coph\",\n    \"unit_of_measurement\": \"-\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/coph_heating/config\";\nmsg.payload = {\n    \"name\": \"COP Room Heating\",\n    \"unique_id\": \"hp_production/coph_heating\",\n    \"object_id\": \"hp_production/coph_heating\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/coph_heating\",\n    \"unit_of_measurement\": \"-\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n// Sensor\nmsg.topic = \"homeassistant/sensor/hp_production/coph_dhw/config\";\nmsg.payload = {\n    \"name\": \"COP DHW Heating\",\n    \"unique_id\": \"hp_production/coph_dhw\",\n    \"object_id\": \"hp_production/coph_dhw\",\n    \"icon\": \"mdi:transmission-tower\",\n    \"state_topic\": \"hp_production/coph_dhw\",\n    \"unit_of_measurement\": \"-\",\n\n    \"device\": {\n        \"name\": \"Heat energy meter\",\n        \"model\": \"Kamstrum Multical\",\n        \"manufacturer\": \"JRE\",\n        \"identifiers\": \"hp_production\",\n    }\n}\nnode.send(msg);\n\n\n\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 350,
+    "y": 1340,
+    "wires": [
+      [
+        "484bb34fc930d758"
+      ]
+    ]
+  },
+  {
+    "id": "f48645efc4810b44",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "props": [],
+    "repeat": "300",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "1",
+    "topic": "",
+    "x": 150,
+    "y": 1340,
+    "wires": [
+      [
+        "6aca9a0fb432ccf1"
+      ]
+    ]
+  },
+  {
+    "id": "a969ece1.106bd",
+    "type": "mbus-out",
+    "z": "21d2fc8df170e634",
+    "name": "Kamstrup",
+    "client": "b8af9f24.8bce",
+    "x": 500,
+    "y": 1440,
+    "wires": [
+      [
+        "22f0e97d.331106"
+      ]
+    ]
+  },
+  {
+    "id": "22f0e97d.331106",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 730,
+    "y": 1440,
+    "wires": []
+  },
+  {
+    "id": "da70b0d9.e686e",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 730,
+    "y": 1580,
+    "wires": []
+  },
+  {
+    "id": "bde8a2d2.64514",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "Read",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": "",
+    "topic": "getDevices",
+    "payload": "",
+    "payloadType": "str",
+    "x": 154,
+    "y": 1498,
+    "wires": [
+      [
+        "d3b3374a.93ade8"
+      ]
+    ]
+  },
+  {
+    "id": "ecc32f4.84ea2d",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "Read ID 1",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "30",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "5",
+    "topic": "getDevice",
+    "payload": "{\"address\": \"828569592D2C400C\"}",
+    "payloadType": "json",
+    "x": 170,
+    "y": 1440,
+    "wires": [
+      [
+        "d3b3374a.93ade8"
+      ]
+    ]
+  },
+  {
+    "id": "f55ed55a.826ba8",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "Send MQTT",
+    "func": "// Helper: force anything into a finite Number (or fallback)\nconst asNumber = (v, fallback = 0) => {\n    const n = Number(v);\n    return Number.isFinite(n) ? n : fallback;\n};\n\n// Helper: clamp number\nconst clamp = (n, min, max) => Math.min(max, Math.max(min, n));\n\n// Helper: publish without msg object reuse issues\nconst pub = (topic, payload) => node.send({ topic, payload });\n\n// ---- Read inputs (force to numbers) ----\nconst dr = msg.payload?.DataRecord ?? [];\n\nconst TotalHeatEnergy = asNumber(dr[0]?.Value, 0);\nconst FlowTemperature = asNumber(dr[6]?.Value, 0) / 100;\nconst ReturnTemperature = asNumber(dr[7]?.Value, 0) / 100;\nconst DiffTemperature = asNumber(dr[8]?.Value, 0) / 100;\nconst Power = asNumber(dr[9]?.Value, 0) / 10;\nconst FlowValue = asNumber(dr[11]?.Value, 0) / 1000;\n\n// ---- Read statuses ----\nconst compressor_status = !!global.get(\"compressor_status\");\nconst defrost_status = !!global.get(\"defrost_status\");\nconst dhw_status = !!global.get(\"dhw_status\");\n\n// ---- Read state (force to numbers) ----\nlet prev_kwh = asNumber(flow.get(\"prev_kwh\"), NaN);\nlet room_kwh = asNumber(flow.get(\"room_kwh\"), 0);\nlet dwh_kwh = asNumber(flow.get(\"dwh_kwh\"), 0);\n\n// Initialize prev_kwh on first run / invalid\nif (!Number.isFinite(prev_kwh) || prev_kwh <= 0) {\n    prev_kwh = TotalHeatEnergy;\n}\n\n// Delta since last sample (protect against negative resets/rollover)\nlet delta_kwh = TotalHeatEnergy - prev_kwh;\nif (!Number.isFinite(delta_kwh) || delta_kwh < 0) delta_kwh = 0;\n\n// ---- Pe / COPH ----\nlet Pe = asNumber(flow.get(\"pe\"), 0);\n\n// Raw COPH sample for this message\nlet coph_sample = 0.0;\n\nif (compressor_status && Pe > 0) {\n    const COPH = Power / Pe;\n    coph_sample = asNumber(COPH, 0);\n    coph_sample = clamp(coph_sample, -5.0, 5.0);\n} else {\n    coph_sample = 0.0;\n}\n\n// ---- 60 second rolling average ----\nconst now = Date.now();\nconst windowMs = 60 * 1000;\n\n// Stored as: [{t: 1234567890, v: 3.21}, ...]\nlet coph_samples = flow.get(\"coph_samples\");\nif (!Array.isArray(coph_samples)) coph_samples = [];\n\n// Add current sample\ncoph_samples.push({ t: now, v: coph_sample });\n\n// Keep only last 60 seconds\ncoph_samples = coph_samples.filter(s => (now - s.t) <= windowMs);\n\n// Average\nlet coph_int = 0.0;\nif (coph_samples.length > 0) {\n    const sum = coph_samples.reduce((acc, s) => acc + asNumber(s.v, 0), 0);\n    coph_int = sum / coph_samples.length;\n}\n\n// Round final published value\ncoph_int = asNumber(coph_int.toFixed(2), 0);\n\n// ---- Allocate energy to DHW or room (skip room during defrost) ----\nif (dhw_status) {\n    dwh_kwh += delta_kwh;\n    pub(\"hp_production/dhw_heatenergy\", dwh_kwh);\n} else if (!defrost_status) {\n    room_kwh += delta_kwh;\n    pub(\"hp_production/room_heatenergy\", room_kwh);\n}\n\n// ---- Publish signals ----\npub(\"hp_production/totalheatenergy\", TotalHeatEnergy);\npub(\"hp_production/flowtemperature\", FlowTemperature);\npub(\"hp_production/returntemperature\", ReturnTemperature);\npub(\"hp_production/difftemperature\", DiffTemperature);\npub(\"hp_production/flowvalue\", asNumber(FlowValue.toFixed(2), 0));\npub(\"hp_production/power\", Power);\npub(\"hp_production/pe\", Pe);\n\n// COPH (60s average)\npub(\"hp_production/coph\", coph_int);\n\npub(\"hp_production/coph_heating\", dhw_status ? 0.0 : coph_int);\npub(\"hp_production/coph_dhw\", dhw_status ? coph_int : 0.0);\n\n// ---- Persist state ----\nflow.set(\"prev_kwh\", TotalHeatEnergy);\nflow.set(\"room_kwh\", room_kwh);\nflow.set(\"dwh_kwh\", dwh_kwh);\n\n// Persist rolling COPH samples\nflow.set(\"coph_samples\", coph_samples);\n\nreturn null;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 710,
+    "y": 1660,
+    "wires": [
+      [
+        "13e67fbe4cbc344b",
+        "0f4275756398064b"
+      ]
+    ]
+  },
+  {
+    "id": "d3b3374a.93ade8",
+    "type": "mbus-controller",
+    "z": "21d2fc8df170e634",
+    "name": "M-Bus Controller",
+    "client": "b8af9f24.8bce",
+    "x": 450,
+    "y": 1580,
+    "wires": [
+      [
+        "f55ed55a.826ba8",
+        "da70b0d9.e686e"
+      ]
+    ]
+  },
+  {
+    "id": "13e67fbe4cbc344b",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 910,
+    "y": 1660,
+    "wires": []
+  },
+  {
+    "id": "0f4275756398064b",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "debug 1",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 880,
+    "y": 1720,
+    "wires": []
+  },
+  {
+    "id": "38cd4f231972ad2d",
+    "type": "mqtt out",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "topic": "",
+    "qos": "0",
+    "retain": "true",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "8ec630e3667c0136",
+    "x": 1110,
+    "y": 440,
+    "wires": []
+  },
+  {
+    "id": "6318a7d20d9e729e",
+    "type": "function",
+    "z": "21d2fc8df170e634",
+    "name": "function 6",
+    "func": "var input = [];\ninput = msg.payload;\n\n// Send to MQTT\n\nmsg.topic = \"lg_heatpump/lg_room_air_temp_circuit1_holding\";\nmsg.payload = (input[2] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_target_temp_circuit1\";\nmsg.payload = (input[2]/ 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_shift_value_in_auto_mode_circuit1\";\nmsg.payload = input[4];\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_shift_value_in_auto_mode_circuit2\";\nmsg.payload = input[7];\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_dhw_target_temp\";\nmsg.payload = (input[8] / 10.0);\nnode.send(msg);\n\nmsg.topic = \"lg_heatpump/lg_set_energy_state\";\nmsg.payload = input[9];\nnode.send(msg);\n\n\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 800,
+    "y": 440,
+    "wires": [
+      [
+        "38cd4f231972ad2d"
+      ]
+    ]
+  },
+  {
+    "id": "c016ada946af3a6d",
+    "type": "modbus-flex-sequencer",
+    "z": "21d2fc8df170e634",
+    "name": "LG Read holding",
+    "sequences": [
+      {
+        "name": "Read input registers",
+        "unitid": "1",
+        "fc": "FC3",
+        "address": "0",
+        "quantity": "10"
+      }
+    ],
+    "server": "a6c2b30e7d452d55",
+    "showStatusActivities": true,
+    "showErrors": true,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": true,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 390,
+    "y": 440,
+    "wires": [
+      [
+        "d688d1d7511bf533",
+        "253e9c661f8b16a7"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "d688d1d7511bf533",
+    "type": "delay",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "pauseType": "rate",
+    "timeout": "5",
+    "timeoutUnits": "seconds",
+    "rate": "10",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": true,
+    "allowrate": false,
+    "outputs": 1,
+    "x": 620,
+    "y": 440,
+    "wires": [
+      [
+        "6318a7d20d9e729e"
+      ]
+    ]
+  },
+  {
+    "id": "b940218caad110b9",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "10",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 150,
+    "y": 620,
+    "wires": [
+      [
+        "18807dbf61129564",
+        "d4089c392ecefc3b"
+      ]
+    ]
+  },
+  {
+    "id": "18807dbf61129564",
+    "type": "modbus-flex-sequencer",
+    "z": "21d2fc8df170e634",
+    "name": "Get switch action energy",
+    "sequences": [
+      {
+        "name": "Get switch action",
+        "unitid": "1",
+        "fc": "FC3",
+        "address": "507",
+        "quantity": "1"
+      }
+    ],
+    "server": "bc9a0d815bdd7702",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": true,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 370,
+    "y": 680,
+    "wires": [
+      [
+        "c756549dc94c4dc9",
+        "40b3279827ab20c7"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "c756549dc94c4dc9",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "debug 2",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 660,
+    "y": 660,
+    "wires": []
+  },
+  {
+    "id": "40b3279827ab20c7",
+    "type": "switch",
+    "z": "21d2fc8df170e634",
+    "d": true,
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "lt",
+        "v": "99",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "99",
+        "vt": "str"
+      },
+      {
+        "t": "empty"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 3,
+    "x": 650,
+    "y": 740,
+    "wires": [
+      [
+        "cded0a8175f212f0",
+        "88d3d091189a8a7e"
+      ],
+      [
+        "616ad6b8ee605525"
+      ],
+      [
+        "616ad6b8ee605525"
+      ]
+    ]
+  },
+  {
+    "id": "616ad6b8ee605525",
+    "type": "change",
+    "z": "21d2fc8df170e634",
+    "d": true,
+    "name": "",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "2",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 940,
+    "y": 780,
+    "wires": [
+      [
+        "cded0a8175f212f0",
+        "88d3d091189a8a7e"
+      ]
+    ]
+  },
+  {
+    "id": "88d3d091189a8a7e",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "d": true,
+    "name": "EnergySend",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1190,
+    "y": 860,
+    "wires": []
+  },
+  {
+    "id": "eaec6ae60efbf829",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "debug 3",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 620,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "ac07e9302c445eb0",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "debug 4",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 620,
+    "y": 380,
+    "wires": []
+  },
+  {
+    "id": "253e9c661f8b16a7",
+    "type": "debug",
+    "z": "21d2fc8df170e634",
+    "name": "debug 5",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 620,
+    "y": 520,
+    "wires": []
+  },
+  {
+    "id": "d4089c392ecefc3b",
+    "type": "change",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "0",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 960,
+    "y": 620,
+    "wires": [
+      [
+        "cded0a8175f212f0"
+      ]
+    ]
+  },
+  {
+    "id": "de04bd503e556943",
+    "type": "inject",
+    "z": "21d2fc8df170e634",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "1",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 110,
+    "y": 540,
+    "wires": [
+      [
+        "8d1f64a58784c848"
+      ]
+    ]
+  }
+]
