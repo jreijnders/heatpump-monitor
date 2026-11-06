@@ -91,3 +91,84 @@ func TestOperatingModeDefrostWithoutCompressorSample(t *testing.T) {
 }
 
 func ptr(s string) *string { return &s }
+
+func columnNames(t *testing.T, view string) []string {
+	t.Helper()
+	rows, err := pool.Query(context.Background(),
+		"SELECT column_name FROM information_schema.columns WHERE table_name = $1 ORDER BY ordinal_position", view)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer rows.Close()
+	var out []string
+	for rows.Next() {
+		var n string
+		if err := rows.Scan(&n); err != nil {
+			t.Fatal(err)
+		}
+		out = append(out, n)
+	}
+	return out
+}
+
+// Views are deployed: existing columns must keep name and position (CREATE OR REPLACE VIEW only appends).
+func TestViewColumnsAppendOnly(t *testing.T) {
+	prefix := map[string][]string{
+		"heat_pump_1m": {"bucket", "flow_temp", "return_temp", "outdoor_temp", "room_temp", "dhw_temp",
+			"target_flow_temp", "flow_rate", "curve_shift", "compressor_on", "defrost_active", "dhw_active",
+			"water_pump_on", "error_code", "operating_mode"},
+		"energy_1m": {"bucket", "operating_mode", "heat_kwh", "elec_kwh"},
+		"cop_hourly": {"bucket", "operating_mode", "heat_kwh", "elec_kwh", "cop", "minutes"},
+		"cop_daily":  {"bucket", "operating_mode", "heat_kwh", "elec_kwh", "cop", "minutes"},
+	}
+	for view, want := range prefix {
+		got := columnNames(t, view)
+		if len(got) < len(want) {
+			t.Fatalf("%s: columns %v", view, got)
+		}
+		for i, w := range want {
+			if got[i] != w {
+				t.Errorf("%s column %d = %q, want %q", view, i+1, got[i], w)
+			}
+		}
+	}
+}
+
+func TestHeatPumpExtraMetrics(t *testing.T) {
+	const d = 13
+	var rows []row
+	for i := 0; i < 6; i++ {
+		ts := at(d, 10, 0, i*10)
+		rows = append(rows,
+			row{ts, "heat_pump", "compressor_on", 1},
+			row{ts, "heat_pump", "compressor_hz", float64(30 + 2*i)},
+			row{ts, "heat_pump", "discharge_temp", 70},
+			row{ts, "heat_pump", "high_pressure", 20},
+			row{ts, "heat_pump", "dhw_heater_on", float64(i % 2)},
+			row{ts, "heat_pump", "error_active", 0})
+	}
+	insert(t, rows)
+	refresh(t, d)
+
+	var hz, discharge, hp, heater, errAct *float64
+	var mode string
+	err := pool.QueryRow(context.Background(),
+		"SELECT compressor_hz, discharge_temp, high_pressure, dhw_heater_on, error_active, operating_mode FROM heat_pump_1m WHERE bucket = $1",
+		at(d, 10, 0, 0)).Scan(&hz, &discharge, &hp, &heater, &errAct, &mode)
+	if err != nil {
+		t.Fatal(err)
+	}
+	near(t, "compressor_hz", nonNil(t, "hz", hz), 35)
+	near(t, "discharge_temp", nonNil(t, "discharge", discharge), 70)
+	near(t, "high_pressure", nonNil(t, "hp", hp), 20)
+	near(t, "dhw_heater_on", nonNil(t, "heater", heater), 0.5)
+	near(t, "error_active", nonNil(t, "err", errAct), 0)
+	if mode != "Space Heating" {
+		t.Errorf("mode = %q", mode)
+	}
+	var unset *float64
+	if err := pool.QueryRow(context.Background(),
+		"SELECT low_pressure FROM heat_pump_1m WHERE bucket = $1", at(d, 10, 0, 0)).Scan(&unset); err != nil || unset != nil {
+		t.Errorf("low_pressure = %v err=%v, want NULL", unset, err)
+	}
+}

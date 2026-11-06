@@ -22,6 +22,14 @@ _Avoid_: Multical, energy meter, warmtemeter
 The Raspberry Pi running Node-RED that reads the Heat Pump, Electricity Meter and Heat Meter and publishes their readings to the Broker.
 _Avoid_: Pi, Node-RED box
 
+**DHW Heater**:
+The electric resistive heater in the DHW tank that boosts DHW above what the compressor reaches or runs the disinfection cycle. Part of the Heat Pump (its electricity is on the Electricity Meter), not a Heat Booster.
+_Avoid_: booster heater, immersion heater, backup heater (that is the space-heating one)
+
+**Backup Heater**:
+The Heat Pump's electric resistive heater for the heating circuit (stages 1 and 2), used when the compressor alone cannot meet demand.
+_Avoid_: bijverwarming, auxiliary heater
+
 **Heat Booster**:
 A fan unit mounted on a radiator that increases its heat output at lower water temperatures. There are two, identified by location (rechts, links); they publish to the Broker themselves.
 _Avoid_: radiator fan, booster
@@ -79,6 +87,10 @@ _Avoid_: CV, central heating
 Operating Mode in which the Heat Pump reverses to melt ice off its outdoor coil, briefly taking heat from the water.
 _Avoid_: de-ice
 
+**Compressor Frequency**:
+Rotational speed of the Heat Pump's inverter compressor in Hz; shows how hard it modulates.
+_Avoid_: compressor speed, hz
+
 **Compressor Cycle**:
 One continuous period from compressor start to compressor stop.
 _Avoid_: run, cycle (alone)
@@ -97,5 +109,9 @@ _Avoid_: shift value
 ### Performance
 
 **COP**:
-Coefficient of performance: thermal energy delivered (from the Heat Meter) divided by electrical energy consumed (from the Electricity Meter) over a given period, reported per Operating Mode and combined.
+Coefficient of performance: thermal energy delivered (from the Heat Meter, per-minute from Flow Rate x Delta T calibrated to its counter) divided by electrical energy consumed (from the Electricity Meter) over a given period, reported per Operating Mode and combined.
 _Avoid_: efficiency
+
+**Calibration Factor**:
+Per day, Heat Meter energy counter divided by the energy from Flow Rate x Delta T. Scales the per-minute heat so it agrees with the counter; 1.0 when no valid factor exists.
+_Avoid_: correction, fudge factor

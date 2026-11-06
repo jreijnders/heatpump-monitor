@@ -23,7 +23,7 @@ func TestReadOnlyRoleAccess(t *testing.T) {
 	defer conn.Close(ctx)
 
 	for _, v := range []string{"readings_1m", "readings_1h", "heat_pump_1m", "energy_1m", "cop_hourly",
-		"cop_daily", "heating_curve_1h", "booster_1m", "data_freshness", "power_1m"} {
+		"cop_daily", "heat_calibration_daily", "heat_intervals_1m", "heating_curve_1h", "booster_1m", "data_freshness", "power_1m"} {
 		t.Run("select "+v, func(t *testing.T) {
 			rows, err := conn.Query(ctx, "SELECT * FROM "+v+" LIMIT 1")
 			if err != nil {

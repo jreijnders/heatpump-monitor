@@ -61,15 +61,18 @@ Update: `git pull && docker compose up -d --build`. Rollback: `git checkout <tag
 
 ## Gateway flow (Node-RED on the Pi)
 
-The flow lives in `nodered/flows.json`.
+The flow lives in `nodered/flows.json` (Gateway at `http://192.168.1.228:1880`). Serial adapters are addressed by `/dev/serial/by-id/...`, so swapped USB ports don't matter.
 
 ```sh
-export NODERED_URL=http://<pi>:1880      # NODERED_TOKEN=... if adminAuth is on
+export NODERED_URL=http://192.168.1.228:1880   # NODERED_TOKEN=... if adminAuth is on
 scripts/pull-flow.sh                     # export the Gateway's flows to nodered/flows.json
 scripts/deploy-flow.sh                   # full deploy of nodered/flows.json
+(cd nodered && npm test)                 # unit tests: run the function-node code from flows.json in a sandbox
 ```
 
-Edit in the Node-RED editor, then pull and review the diff before committing. Rollback: `git checkout <baseline-commit> -- nodered/flows.json && scripts/deploy-flow.sh`. After cutover to the new topics, clear the old retained ones: `mosquitto_pub -r -n -t lg_heatpump/<topic>`.
+Edit in the Node-RED editor (or in `flows.json`), run the tests, deploy, and review the diff before committing. Rollback to the pre-rewrite flow: `git checkout 29629bd -- nodered/flows.json && scripts/deploy-flow.sh`.
+
+Gotchas: modbus flex-sequencers drop custom `msg` properties (per-cycle state lives in flow context), and their output 2 is the raw response on success, not an error output (failures arrive as an empty payload on output 1).
 
 ## Claude access
 

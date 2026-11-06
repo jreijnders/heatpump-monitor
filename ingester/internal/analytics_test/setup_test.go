@@ -110,3 +110,31 @@ func near(t *testing.T, what string, got, want float64) {
 		t.Errorf("%s = %v, want %v", what, got, want)
 	}
 }
+
+// whPerLitreKelvin must match the constant in db/schema/030_cop.sql.
+const whPerLitreKelvin = 1.163
+
+// heatSample writes one Heat Meter poll: flow rate (L/h), flow/return temperatures and the counter.
+func heatSample(ts time.Time, counterKWh, flowLph, deltaT float64) []row {
+	const ret = 30.0
+	return []row{
+		{ts, "heat_meter", "energy_kwh", counterKWh},
+		{ts, "heat_meter", "flow_rate", flowLph},
+		{ts, "heat_meter", "flow_temp", ret + deltaT},
+		{ts, "heat_meter", "return_temp", ret},
+	}
+}
+
+// heatMeter writes Heat Meter polls every step in [from, to) at 1000 L/h with the Delta T that
+// gives thermal power kw(minute of sample) (kW). The counter advances by scale * kw * step.
+func heatMeter(from, to time.Time, step time.Duration, base, scale float64, kw func(min time.Time) float64) []row {
+	var rows []row
+	v := base
+	for ts := from; ts.Before(to); ts = ts.Add(step) {
+		p := kw(ts.Truncate(time.Minute))
+		v += scale * p * step.Hours()
+		// P[W] = 1000 L/h * dT * 1.163  =>  dT = kw*1000 / (1000 * 1.163) = kw / 1.163
+		rows = append(rows, heatSample(ts, v, 1000, p/whPerLitreKelvin)...)
+	}
+	return rows
+}

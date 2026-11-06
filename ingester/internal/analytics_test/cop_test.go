@@ -2,6 +2,7 @@ package analytics_test
 
 import (
 	"context"
+	"math"
 	"testing"
 	"time"
 )
@@ -40,7 +41,7 @@ func TestCOPSpaceHeatingHour(t *testing.T) {
 	from, to := at(d, 9, 0, 0), at(d, 12, 0, 0)
 	rows := heatPumpFlags(from, to, func(time.Time) flags { return spaceHeating })
 	rows = append(rows, counter("electricity_meter", from, to, 10*time.Second, 5000, constant(0.75))...)
-	rows = append(rows, counter("heat_meter", from, to, time.Minute, 20000, constant(3))...)
+	rows = append(rows, heatMeter(from, to, time.Minute, 20000, 1, constant(3))...)
 	insert(t, rows)
 	refresh(t, d)
 
@@ -87,15 +88,17 @@ func TestCOPPerModeAndCombined(t *testing.T) {
 		return 3.0
 	}
 	rows = append(rows, counter("electricity_meter", from, to, 10*time.Second, 100, elec)...)
-	rows = append(rows, counter("heat_meter", from, to, time.Minute, 300, heat)...)
+	rows = append(rows, heatMeter(from, to, time.Minute, 300, 1, heat)...)
 	insert(t, rows)
 	refresh(t, d)
 
 	got := copByMode(t, "cop_hourly", at(d, 10, 0, 0))
-	// DHW 30 min: elec 0.5, heat 1.0 -> 2.0. SH 30 min: elec 0.25, heat 1.5 -> 6.0. Combined 2.5/0.75.
+	// Heat per minute is the trapezoid of two 60 s samples, so the minute of each power step gets the
+	// mean of both powers. DHW 10:00-10:29: 2.5 + 29*2 = 60.5 kW-min; SH 10:30-10:59: 2.5 + 29*3 = 89.5.
+	// Elec: DHW 0.5 kWh, SH 0.25 kWh. Combined heat 150 kW-min = 2.5 kWh.
 	cases := map[string][3]float64{
-		"DHW":           {1.0, 0.5, 2.0},
-		"Space Heating": {1.5, 0.25, 6.0},
+		"DHW":           {60.5 / 60, 0.5, 60.5 / 60 / 0.5},
+		"Space Heating": {89.5 / 60, 0.25, 89.5 / 60 / 0.25},
 		"Combined":      {2.5, 0.75, 2.5 / 0.75},
 	}
 	for mode, want := range cases {
@@ -140,7 +143,7 @@ func TestCOPExcludesResetAndGap(t *testing.T) {
 
 	// Heat meter silent 10:40-10:49 inclusive: no samples, so minutes 10:40..10:49 have no heat delta
 	// and minute 10:50 has a 11-minute-old previous sample.
-	for _, r := range counter("heat_meter", from, to, time.Minute, 20000, constant(3)) {
+	for _, r := range heatMeter(from, to, time.Minute, 20000, 1, constant(3)) {
 		if !r.t.Before(at(d, 10, 40, 0)) && r.t.Before(at(d, 10, 50, 0)) {
 			continue
 		}
@@ -168,7 +171,7 @@ func TestCOPNoDivisionByZero(t *testing.T) {
 	from, to := at(d, 9, 0, 0), at(d, 12, 0, 0)
 	rows := heatPumpFlags(from, to, func(time.Time) flags { return spaceHeating })
 	rows = append(rows, counter("electricity_meter", from, to, 10*time.Second, 100, constant(0))...)
-	rows = append(rows, counter("heat_meter", from, to, time.Minute, 300, constant(1))...)
+	rows = append(rows, heatMeter(from, to, time.Minute, 300, 1, constant(1))...)
 	insert(t, rows)
 	refresh(t, d)
 
@@ -178,10 +181,12 @@ func TestCOPNoDivisionByZero(t *testing.T) {
 	}
 }
 
-func TestHeatMeterDeltaAttributedToRightMinute(t *testing.T) {
+func TestHeatMeterEnergyAttributedToRightMinute(t *testing.T) {
 	const d = 6
 	from, to := at(d, 10, 0, 0), at(d, 10, 15, 0)
-	// DHW only in minute 10:05; heat meter reads at :30 each minute and jumps +1.0 kWh at 10:05:30.
+	// DHW only in minute 10:05. Heat Meter polls at :30 each minute; thermal power is 0 except a
+	// 6 kW sample at 10:05:30. Trapezoid: the interval (10:04:30, 10:05:30] holds 3 kW * 1 min =
+	// 0.05 kWh -> minute 10:05 (DHW); (10:05:30, 10:06:30] holds 0.05 kWh -> minute 10:06 (Space Heating).
 	rows := heatPumpFlags(from, to, func(m time.Time) flags {
 		if m.Equal(at(d, 10, 5, 0)) {
 			return flags{comp: 1, dhw: 1}
@@ -189,13 +194,12 @@ func TestHeatMeterDeltaAttributedToRightMinute(t *testing.T) {
 		return spaceHeating
 	})
 	rows = append(rows, counter("electricity_meter", from, to, 10*time.Second, 100, constant(0.6))...)
-	v := 50.0
-	for ts := at(d, 10, 0, 30); ts.Before(to); ts = ts.Add(time.Minute) {
-		if ts.Equal(at(d, 10, 5, 30)) {
-			v += 1.0
+	rows = append(rows, heatMeter(at(d, 10, 0, 30), to, time.Minute, 50, 1, func(m time.Time) float64 {
+		if m.Equal(at(d, 10, 5, 0)) {
+			return 6
 		}
-		rows = append(rows, row{ts, "heat_meter", "energy_kwh", v})
-	}
+		return 0
+	})...)
 	insert(t, rows)
 	refresh(t, d)
 
@@ -215,12 +219,18 @@ func TestHeatMeterDeltaAttributedToRightMinute(t *testing.T) {
 			t.Fatal(err)
 		}
 		n++
-		if b.Equal(at(d, 10, 5, 0)) {
-			near(t, "heat at 10:05", heat, 1.0)
+		switch {
+		case b.Equal(at(d, 10, 5, 0)):
+			near(t, "heat at 10:05", heat, 0.05)
 			if mode != "DHW" {
 				t.Errorf("mode at 10:05 = %q, want DHW", mode)
 			}
-		} else {
+		case b.Equal(at(d, 10, 6, 0)):
+			near(t, "heat at 10:06", heat, 0.05)
+			if mode != "Space Heating" {
+				t.Errorf("mode at 10:06 = %q, want Space Heating", mode)
+			}
+		default:
 			near(t, "heat at "+b.Format("15:04"), heat, 0)
 		}
 	}
@@ -228,19 +238,19 @@ func TestHeatMeterDeltaAttributedToRightMinute(t *testing.T) {
 		t.Fatal(err)
 	}
 	if n != 14 { // 10:01..10:14 (10:00 has no previous sample)
-		t.Errorf("minutes with heat delta = %d, want 14", n)
+		t.Errorf("minutes with heat = %d, want 14", n)
 	}
 }
 
-// heatMeterTicks writes one Heat Meter sample per minute in [from, to) (+0.05 kWh each, 3 kW) at
-// the time given by sampleAt(minute), skipping minutes where sampleAt returns ok=false.
+// heatMeterTicks writes one Heat Meter sample per minute in [from, to) (3 kW each) at the time
+// given by sampleAt(minute), skipping minutes where sampleAt returns ok=false.
 func heatMeterTicks(from, to time.Time, sampleAt func(min time.Time) (time.Time, bool)) []row {
 	var rows []row
 	v := 20000.0
 	for m := from; m.Before(to); m = m.Add(time.Minute) {
 		v += 0.05
 		if ts, ok := sampleAt(m); ok {
-			rows = append(rows, row{ts, "heat_meter", "energy_kwh", v})
+			rows = append(rows, heatSample(ts, v, 1000, 3/whPerLitreKelvin)...)
 		}
 	}
 	return rows
@@ -294,5 +304,8 @@ func TestCOPJitteredPollAcrossMinuteBoundaryCounts(t *testing.T) {
 	if c.minutes != 59 { // only the empty 10:30 bucket is excluded
 		t.Errorf("minutes = %d, want 59", c.minutes)
 	}
-	near(t, "cop", *c.cop, 4.0)
+	// The 60.2 s interval carries 0.2 s more heat than the 60 s of electricity it is paired with.
+	if math.Abs(*c.cop-4.0) > 1e-2 {
+		t.Errorf("cop = %v, want ~4.0", *c.cop)
+	}
 }

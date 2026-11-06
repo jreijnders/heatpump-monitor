@@ -752,6 +752,61 @@
       }
     },
     {
+      "id": 38,
+      "type": "timeseries",
+      "title": "Heat calibration factor per day (Heat Meter counter / flow x Delta T)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 36
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT day::timestamp AS time, factor AS \"Factor\", CASE WHEN valid THEN factor END AS \"Factor (valid, applied)\" FROM heat_calibration_daily WHERE day >= ($__timeFrom() AT TIME ZONE 'Europe/Amsterdam')::date AND day <= ($__timeTo() AT TIME ZONE 'Europe/Amsterdam')::date ORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "none",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "spanNulls": false,
+            "showPoints": "always"
+          },
+          "decimals": 3
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "description": "Per Europe/Amsterdam day: Heat Meter energy counter divided by the energy from flow rate x Delta T. Valid points are applied to heat_kwh (complete day, >= 5 kWh, factor 0.8 to 1.25); invalid days fall back to the latest valid factor of the previous 7 days, else 1.0. Drift away from 1.0 means a sensor or meter issue. See ADR-0003."
+    },
+    {
       "id": 15,
       "type": "row",
       "title": "Cycling",
@@ -760,7 +815,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 45
       },
       "panels": []
     },
@@ -776,7 +831,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 37
+        "y": 46
       },
       "targets": [
         {
@@ -841,7 +896,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 37
+        "y": 46
       },
       "targets": [
         {
@@ -887,7 +942,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 37
+        "y": 46
       },
       "targets": [
         {
@@ -931,7 +986,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 37
+        "y": 46
       },
       "targets": [
         {
@@ -974,7 +1029,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 43
+        "y": 52
       },
       "targets": [
         {
@@ -1046,7 +1101,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 43
+        "y": 52
       },
       "targets": [
         {
@@ -1079,6 +1134,167 @@
       "description": "Completed cycles by duration (minutes)."
     },
     {
+      "id": 35,
+      "type": "timeseries",
+      "title": "Compressor Frequency",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 61
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT bucket AS time, compressor_hz AS \"Compressor Frequency\" FROM heat_pump_1m WHERE $__timeFilter(bucket) ORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "hertz",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "spanNulls": false,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "description": "Compressor Frequency (minute average). Low frequency with short Compressor Cycles points to over-sized capacity or a too-low Heating Curve."
+    },
+    {
+      "id": 36,
+      "type": "timeseries",
+      "title": "Discharge, suction and liquid temperature",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 61
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT bucket AS time, discharge_temp AS \"Discharge\", suction_temp AS \"Suction\", liquid_temp AS \"Liquid\", evaporator_in_temp AS \"Evaporator in\", evaporator_out_temp AS \"Evaporator out\" FROM heat_pump_1m WHERE $__timeFilter(bucket) ORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "celsius",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "spanNulls": false,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 37,
+      "type": "timeseries",
+      "title": "Refrigerant pressures",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "timescale"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 61
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "timescale"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT bucket AS time, high_pressure AS \"High pressure\", low_pressure AS \"Low pressure\" FROM heat_pump_1m WHERE $__timeFilter(bucket) ORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "none",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "spanNulls": false,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "description": "Unit as reported by the Heat Pump (see docs/metrics.md)."
+    },
+    {
       "id": 22,
       "type": "row",
       "title": "Heating Curve",
@@ -1087,7 +1303,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 52
+        "y": 70
       },
       "panels": []
     },
@@ -1103,7 +1319,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 53
+        "y": 71
       },
       "targets": [
         {
@@ -1168,7 +1384,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 53
+        "y": 71
       },
       "targets": [
         {
@@ -1220,7 +1436,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 53
+        "y": 71
       },
       "targets": [
         {
@@ -1269,7 +1485,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 62
+        "y": 80
       },
       "panels": []
     },
@@ -1285,7 +1501,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 63
+        "y": 81
       },
       "targets": [
         {
@@ -1337,7 +1553,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 63
+        "y": 81
       },
       "targets": [
         {
@@ -1389,7 +1605,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 63
+        "y": 81
       },
       "targets": [
         {
@@ -1441,7 +1657,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 71
+        "y": 89
       },
       "targets": [
         {
@@ -1493,7 +1709,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 71
+        "y": 89
       },
       "targets": [
         {
@@ -1545,7 +1761,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 71
+        "y": 89
       },
       "targets": [
         {
@@ -1594,7 +1810,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 79
+        "y": 97
       },
       "panels": []
     },
@@ -1610,7 +1826,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 80
+        "y": 98
       },
       "targets": [
         {
