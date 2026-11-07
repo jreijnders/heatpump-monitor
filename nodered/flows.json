@@ -669,7 +669,7 @@
     "type": "comment",
     "z": "21d2fc8df170e634",
     "name": "Heat pump control (existing behaviour, not monitoring)",
-    "info": "Write silent (coil 2) every 1 s; Write energy (holding 9) = 0 every 10 s. Unchanged from the original flow.",
+    "info": "Write silent (coil 2) = false every 1 s (silent mode off since 2026-11-07, was true: more defrosts below ~3-4 C); Write energy (holding 9) = 0 every 10 s.",
     "x": 230,
     "y": 620,
     "wires": []
@@ -678,7 +678,7 @@
     "id": "de04bd503e556943",
     "type": "inject",
     "z": "21d2fc8df170e634",
-    "name": "",
+    "name": "Silent off",
     "props": [
       {
         "p": "payload"
@@ -689,7 +689,7 @@
     "once": false,
     "onceDelay": 0.1,
     "topic": "",
-    "payload": "true",
+    "payload": "false",
     "payloadType": "bool",
     "x": 130,
     "y": 670,

@@ -143,4 +143,4 @@ docker run --rm eclipse-mosquitto:2 mosquitto_pub -h 192.168.1.40 -q 1 \
 
 ## Existing Gateway behaviour outside this project
 
-The flow also writes to the Heat Pump: coil 2 "silent mode" every 1 s and holding register 9 "energy state" = 0 every 10 s. Heat pump control, kept unchanged, not part of the monitoring contract.
+The flow also writes to the Heat Pump: coil 2 "silent mode" = false every 1 s (was true until 2026-11-07, see `docs/system.md` change log) and holding register 9 "energy state" = 0 every 10 s. Heat pump control, kept unchanged, not part of the monitoring contract.
