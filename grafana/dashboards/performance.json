@@ -2347,17 +2347,27 @@
           },
           "custom": {
             "show": "points",
+            "pointShape": "circle",
             "pointSize": {
-              "fixed": 8
-            }
-          }
+              "fixed": 6
+            },
+            "fillOpacity": 50,
+            "axisPlacement": "auto"
+          },
+          "unit": "celsius"
         },
         "overrides": []
       },
       "options": {
-        "seriesMapping": "manual",
+        "mapping": "manual",
         "series": [
           {
+            "frame": {
+              "matcher": {
+                "id": "byIndex",
+                "options": 0
+              }
+            },
             "x": {
               "matcher": {
                 "id": "byName",
@@ -2374,9 +2384,17 @@
           }
         ],
         "legend": {
-          "showLegend": false
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
         }
-      }
+      },
+      "pluginVersion": "12.3.0"
     },
     {
       "id": 24,
