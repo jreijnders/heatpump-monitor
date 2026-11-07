@@ -2380,7 +2380,9 @@
                 "options": "Flow Temperature"
               }
             },
-            "name": "Flow vs Outdoor"
+            "name": {
+              "fixed": "Flow vs Outdoor"
+            }
           }
         ],
         "legend": {
